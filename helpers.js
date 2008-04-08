@@ -8,7 +8,7 @@
 Element.Methods.contains = function(element, content) { 
   element = $(element);
   return !!element.innerHTML.stripTags().match(RegExp.escape(content))
-}
+};
 
 
 /**
@@ -21,7 +21,7 @@ Array.prototype.namespace = function() {
   this.inject(arguments[0] || window, function(object, property) {
     return object[property] = object[property] || { };
   })
-}
+};
 
 /**
  * Returns negated function
@@ -37,7 +37,7 @@ Function.prototype.negate = function() {
   return function() {
     return !f.apply(f, arguments);
   }
-}
+};
 
 /**
  * Calls and returns function
@@ -49,7 +49,7 @@ Function.prototype.negate = function() {
  */
 Function.prototype.invoke = function() {
   this.apply(this, $A(arguments)); return this;
-}
+};
 
 
 /**
@@ -60,7 +60,7 @@ Ajax.Responders.register({
   onCreate: function(req) {
     req.url += (/\?/.test(req.url) ? '&' : '?') + '_token=' + Date.now();
   }
-})
+});
 
 
 /**
@@ -73,7 +73,7 @@ Element.Methods.remove = Element.Methods.remove.wrap(
     [element].concat(element.descendants()).each(Element.stopObserving);
     return proceed(element);
   }
-)
+);
 
 
 /**
@@ -83,7 +83,7 @@ Element.Methods.remove = Element.Methods.remove.wrap(
 Element.Methods.toTemplate = function(element) {
   if (!(element = $(element))) return null;
   return element.wrap().show().up().remove().innerHTML;
-}
+};
 
 
 /**
@@ -92,7 +92,7 @@ Element.Methods.toTemplate = function(element) {
  */
 Field.Methods.isEmpty = function(element) {
   return $(element).getElements().any(Element.present);
-}
+};
 
 
 /**
@@ -105,7 +105,7 @@ Element.Methods.replaceAttribute = function(element, attr, pattern, replacement)
   return el.writeAttribute(attr, element.readAttribute(attr)
     .replace(new RegExp(pattern), replacement)
   )
-}
+};
 
 
 /**
@@ -117,7 +117,7 @@ Element.Methods.replaceHTML = function(element, pattern, replacement) {
   return element.update(
     element.innerHTML.replace(new RegExp(pattern), replacement)
   );
-}
+};
 
 
 Element.Methods.toHTML = function(element) {
@@ -128,11 +128,11 @@ Element.Methods.toHTML = function(element) {
       ? element.nodeValue
       : xmlSerializer.serializeToString(element);
   } catch(e) {
-    return element.xml 
+    return (element.xml 
       || element.outerHTML
-      || element.cloneNode(true).wrap().innerHTML;
+      || element.cloneNode(true).wrap().innerHTML);
   }
-}
+};
 
 
 (function(){
@@ -144,14 +144,14 @@ Element.Methods.toHTML = function(element) {
     var args = $A(arguments), proceed = args.shift();
     return proceed.apply(proceed, args) || Prototype.Q;
   })
-})()
+})();
 
 
 /*
 
 Label support in Safari 2
 
-*/
+
 document.observe('click', function(e) {
   var target = e.findElement('label[for]');
   if (!target) return;
@@ -162,6 +162,8 @@ document.observe('click', function(e) {
     input.click();
   }
 })
+
+*/
 
 
 /**
@@ -184,7 +186,7 @@ Field.Methods.present = function(element) {
     (t == 'checkbox' && element.checked) ||
     (t == 'radio' && (element.checked || $$('input[name=' + element.name + ']:checked').length))
     (/select-one|select-multiple/.test(t) && element.selectedIndex != -1));
-}
+};
 
 /**
  * Change Element#observe to imlicitly stop event when executing event handler
@@ -207,28 +209,29 @@ Prototype.addScript = function(url) {
   // caching head element as a function property
   (arguments.callee._head = arguments.callee._head || $$('head')[0])
     .insert(new Element('script', { type: 'text/javascript', src: url }))
-}
+};
+
 Prototype.addStylesheet = function() {
   // caching head element as a function property
   (arguments.callee._head = arguments.callee._head || $$('head')[0])
     .insert(new Element('style', { type: 'text/css', rel: 'stylesheet', href: url }))
-}
+};
 
 Function.prototype._new = function() {
   var __method = this, args = arguments;
   function C() { return __method.apply(this, args); };
   C.prototype = __method.prototype;
   return new C;
-}
+};
 
 // The toString function is not generic; 
 // it throws a TypeError exception if its this value is not a Function object
 // Ecma-262,ed3; 15.3.4.2
-function isFunction(o) {
+Object._isFunction = function(o) {
   try {
     Function.prototype.toString.call(o);
   } catch(e) {
     return false;
   };
   return true;
-}
+};
