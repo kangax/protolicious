@@ -220,3 +220,15 @@ Function.prototype._new = function() {
   C.prototype = __method.prototype;
   return new C;
 }
+
+// The toString function is not generic; 
+// it throws a TypeError exception if its this value is not a Function object
+// Ecma-262,ed3; 15.3.4.2
+function isFunction(o) {
+  try {
+    Function.prototype.toString.call(o);
+  } catch(e) {
+    return false;
+  };
+  return true;
+}
