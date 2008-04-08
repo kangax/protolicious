@@ -1,14 +1,21 @@
 /**
- * @usage   $("myElement").contains(" some text... ");
- * @params  element HTMLElement
- * @params  content String text to match against
- * @return  Boolean true if element's innerHTML property matches with specified text
- *
+ *  Element#contains(@element, pattern) -> Boolean
+ *  - @element(Element): HTMLElement
+ *  - pattern(String|RegExp): pattern to test element's content against
+ *  Tests whether element's content contains specified string (or matches agains regular expression)
+ *  
+ *  $("myElement").contains(" some text... ");
+ *  $("otherElement").contains(/(foo|bar)/i)
  */
-Element.Methods.contains = function(element, content) { 
-  element = $(element);
-  return !!element.innerHTML.stripTags().match(RegExp.escape(content))
-};
+ 
+Element.addMethods({
+  contains: function(element, pattern) { 
+    element = $(element);
+    if (!pattern) return false;
+    pattern = pattern.constructor == RegExp ? pattern : RegExp.escape(pattern);
+    return !!element.innerHTML.stripTags().match(pattern  );
+  }
+});
 
 
 /**
@@ -224,9 +231,16 @@ Function.prototype._new = function() {
   return new C;
 };
 
-// The toString function is not generic; 
-// it throws a TypeError exception if its this value is not a Function object
-// Ecma-262,ed3; 15.3.4.2
+/** 
+ *  Object._isFunction(object) -> Boolean
+ *  - object(Object): an object to test against
+ *  Tests whether an object is a Function object.
+ *  
+ *  As per ECMA-262, ed3; 15.3.4.2: "The toString function is not generic; 
+ *  it throws a TypeError exception if its this value is not a Function object..."
+ *  
+ *  
+ **/
 Object._isFunction = function(o) {
   try {
     Function.prototype.toString.call(o);

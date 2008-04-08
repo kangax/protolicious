@@ -17,9 +17,14 @@
     <div id="testlog">
       
     </div>
+    <div id="container">
+      foo bar Bazz
+      <span>and some more</span>
+    </div>
     
     <script type="text/javascript">
       new Test.Unit.Runner({
+        
         testIsFunction: function() {
           [
             null, 
@@ -40,6 +45,7 @@
           this.assert(Object._isFunction(function(){}));
           this.assert(Object._isFunction(document.createElement));
         },
+        
         testFunctionPrototypeNegate: function() {
           
           var truthy = function() { return true; };
@@ -50,7 +56,13 @@
           this.assert(!truthy.negate()());
           this.assert(!falsy());
           this.assert(falsy.negate()());
-          
+        },
+        
+        testElementContains: function() {
+          this.assert($('container').contains('foo'));
+          this.assert(!$('container').contains('Foo'));
+          this.assert($('container').contains(/baz./i));
+          this.assert(!$('container').contains(/blah/));
         }
         
       })
