@@ -13,7 +13,7 @@ Element.addMethods({
     element = $(element);
     if (!pattern) return false;
     pattern = pattern.constructor == RegExp ? pattern : RegExp.escape(pattern);
-    return !!element.innerHTML.stripTags().match(pattern  );
+    return !!element.innerHTML.stripTags().match(pattern);
   }
 });
 
@@ -233,7 +233,7 @@ Function.prototype._new = function() {
 
 /** 
  *  Object._isFunction(object) -> Boolean
- *  - object(Object): an object to test against
+ *  - object(Any): an object to test against
  *  Tests whether an object is a Function object.
  *  
  *  As per ECMA-262, ed3; 15.3.4.2: "The toString function is not generic; 
@@ -249,3 +249,9 @@ Object._isFunction = function(o) {
   };
   return true;
 };
+
+// Experimental
+Object._isFunction2 = function(o) {
+  return Object.prototype.toString
+    .call(o).indexOf('Function') != -1;
+}
