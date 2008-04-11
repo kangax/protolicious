@@ -30,13 +30,16 @@ Enumerable.findIndex = function(iterator, context) {
  *
  * Returns a number representing how many values in "collection" iterator satisfies
  *
- *    ["bar", 1, "foo", 2].count(1); // => 1
- *    ["bar", 1, "foo", 2].count(function(v) { return parseIn(v) != NaN }); // => 2
+ *    // how many of 1 is in the array?
+ *    ["bar", 1, "foo", 2, 1].count(1); // => 2
+ *
+ *    // how many could be converted to number?
+ *    ["bar", 1, "foo", 2, 3].count(function(v) { return parseIn(v) }); // => 3
  **/
 Enumerable.count = function(iterator, context) {
   var result = 0;
   this.each(function(value, index) {
-    if (iterator.call(context || iterator, value, index))
+    if (iterator.call ? iterator.call(context || iterator, value, index) : (iterator == value))
       ++result;
   })
   return result;
