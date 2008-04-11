@@ -11,6 +11,10 @@
  *    $R(1,10).findIndex(function(v) { return v % 5 == 0 }); // => 4
  *    $R(1,10).findIndex(function(v) { return v % 25 == 0 }); // => undefined
  *
+ *    // Get all <td> of <th.foo>
+ *    var index = $$('th').findIndex(function(el) { return el.hasClassName('foo') });
+ *    $$('td:nth-child(' + index + ')');
+ *
  **/
 Enumerable.findIndex = function(iterator, context) {
   var result;
@@ -34,7 +38,11 @@ Enumerable.findIndex = function(iterator, context) {
  *    ["bar", 1, "foo", 2, 1].count(1); // => 2
  *
  *    // how many could be converted to number?
- *    ["bar", 1, "foo", 2, 3].count(function(v) { return parseIn(v) }); // => 3
+ *    ["bar", 1, "foo", 2, 3].count(function(v) { return parseInt(v) }); // => 3
+ *
+ *    // how many are strings?
+ *    ["foo", "bar", 1, 2, 3, "baz"].count(Object.isString); // => 3
+ *
  **/
 Enumerable.count = function(iterator, context) {
   var result = 0;
