@@ -1,31 +1,34 @@
 /**
  *  Element#contains(@element, pattern) -> Boolean
- *  - @element(Element): HTMLElement
+ *  - @element(Element): element which content will be tested
  *  - pattern(String|RegExp): pattern to test element's content against
+ *  
  *  Tests whether element's content contains specified string (or matches agains regular expression)
  *  
- *  $("myElement").contains(" some text... ");
- *  $("otherElement").contains(/(foo|bar)/i)
- */
- 
-Element.addMethods({
-  contains: function(element, pattern) { 
-    element = $(element);
-    if (!pattern) return false;
-    pattern = pattern.constructor == RegExp ? pattern : RegExp.escape(pattern);
-    return !!element.innerHTML.stripTags().match(pattern);
-  }
-});
+ *      $("myElement").contains("some text...");
+ *      $("otherElement").contains(/(foo|bar)/i)
+ **/ 
+Element.Methods.contains = function(element, pattern) { 
+  element = $(element);
+  if (!pattern) return false;
+  pattern = pattern.constructor == RegExp ? pattern : RegExp.escape(pattern);
+  return !!element.innerHTML.stripTags().match(pattern);
+}
 
 
 /**
- * @usage   $w(" MyApp util Dom ").namespace(Prototype); //=> Prototype.MyApp.util.Dom
- * @params  arguments[0] Root object to begin nesting with
- * @return  
- *
- */
-Array.prototype.namespace = function() {
-  this.inject(arguments[0] || window, function(object, property) {
+ *  Array#namespace(parrent=window) -> Array
+ *  - parent(Object): top level object to start injection from
+ *  
+ *  Creates a nested chain of objects, based on the value of array items
+ *  
+ *      ['foo', 'bar', 'baz'].namespace();
+ *      typeof foo.bar.baz; // => 'object'
+ *      ['util', 'DOM', 'dimensions'].namespace(Prototype);
+ *      typeof Prototype.util.DOM.dimensions; // => 'object'
+ **/
+Array.prototype.namespace = function(parent) {
+  this.inject(parent || window, function(object, property) {
     return object[property] = object[property] || { };
   })
 };
@@ -255,3 +258,5 @@ Object._isFunction2 = function(o) {
   return Object.prototype.toString
     .call(o).indexOf('Function') != -1;
 }
+
+Element.addMethods();
