@@ -5,8 +5,8 @@ var Proto = Proto || { };
  * - element(FormElement): element to observe
  *
  * Dispatches custom event when form's state changes.
- * The event is dispatched by the form elements itself.
- * Rules for determining state change can be customized via (static) Proto.FormDispatcher.rules
+ * The event is dispatched by the form element itself.
+ * Rules for determining 'state change' can be customized via (static) Proto.FormDispatcher.rules
  * Name of event can be changed via (static) Proto.FormDispatcher.eventName
  *
  *    new Proto.FormDispatcher('myForm');
