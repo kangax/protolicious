@@ -1,5 +1,5 @@
 /**
- * Object.forIn(object, iterator[, context = iterator])
+ * Object.forIn(object, iterator[, context = iterator]) -> object
  *
  * - object(Any):        Object to enumerate over
  * - iterator(Function): Function to call for each iteration. 
@@ -50,7 +50,7 @@
         iterator.call(context || iterator, prop, object[prop]);
       }
       // walk through "DontEnum-buggy" properties, 
-      // check if any of them are directly in the oject 
+      // check if any of them are directly in the oject
       while (length) {
         if (hasOwnProperty.call(object, DontEnumProperties[--length])) {
           iterator.call(context || iterator, prop, object[prop]);
@@ -60,3 +60,42 @@
     }
   }
 })()
+
+
+/**
+ * Object.flip(object) -> object
+ * - object(Any): Object whose key/values are to be flipped
+ *
+ *    Object.flip({foo: 'bar'}); // => { bar: 'foo' }
+ *
+ **/
+Object.flip = function(object){
+  var clone = { };
+  Object.forIn(object, function(prop, value) {
+    clone[value] = prop;
+  })
+  return clone;
+}
+
+/**
+ * Object.find(object, iterator[, context = iterator]) -> object
+ * - object(Any): Object to enumerate over
+ * - iterator(Function): function to invoke for each iteration
+ * - context(Any): Context to call iterator within. Defaults to iterator.
+ *
+ *    // Find all functions within an Event object
+ *    Object.find(Event, Object.isFunction);
+ *
+ **/
+Object.find = function(object, iterator, context) {
+  var result = { };
+  Object.forIn(object, function(key, value) {
+    if (iterator.call(context || iterator, key, value))
+      result[key] = value;
+  });
+  return result;
+}
+
+
+
+
