@@ -84,7 +84,9 @@ Object.flip = function(object){
  * - context(Any): Context to call iterator within. Defaults to iterator.
  *
  *    // Find all functions within an Event object
- *    Object.find(Event, Object.isFunction);
+ *    Object.find(Event, function(key, value) {
+ *      return Object.isFunction(value);
+ *    });
  *
  **/
 Object.find = function(object, iterator, context) {
