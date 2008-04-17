@@ -31,7 +31,8 @@
     'valueOf',
     'hasOwnProperty',
     'isPrototypeOf',
-    'propertyIsEnumerable'
+    'propertyIsEnumerable',
+    'constructor'
   ]
   var length = DontEnumProperties.length;
   var hasOwnProperty = Object.prototype.hasOwnProperty;
