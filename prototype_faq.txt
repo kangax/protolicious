@@ -1,0 +1,85 @@
+Q:  IE throws error: "Object does not support this property or method". What happened?
+A:  http://www.prototypejs.org/learn/extensions
+
+
+Q:  Error is thrown: this.<blah> is not a function. What happened?
+A:  This is most likely an execution context (scope) problem. Iterators (which are used in Enumerable methods) 
+    and event handlers (used in Element#observe) are executed within global context.
+    Changing the execution context is as easy as using Function#bind or Function#bindAsEventListener
+    
+    http://alternateidea.com/blog/articles/2007/7/18/javascript-scope-and-binding
+    http://www.prototypejs.org/api/enumerable
+    http://www.prototypejs.org/api/event/observe
+    http://www.prototypejs.org/api/function/bind
+    http://www.prototypejs.org/api/function/bindAsEventListener
+    
+  
+Q:  I get all kinds of weird output when iterating over an array using for..in.
+A:  for..in should not be used to iterate over arrays
+    http://andrewdupont.net/2006/05/18/javascript-associative-arrays-considered-harmful/
+
+
+Q:  Something doesn't work as expected. What should I do?
+A:  1) Get the latest version of prototype.
+    2) Make sure a document has a proper doctype and is valid. http://validator.w3.org/
+    3) There could be a conflict with other scripts in a document.
+        Try narrowing down the conflicting ones.
+
+
+Q:  My applications slows down when I use Event#observe on 1000+ cells in a table.
+A:  Event delegation could increase performance (and reduce memory usage) in such cases.
+
+    http://icant.co.uk/sandbox/eventdelegation/
+    http://cherny.com/webdev/70/javascript-event-delegation-and-event-hanlders
+    http://mislav.caboo.se/js/handling-events-on-elements/
+
+
+Q:  How do I make prototype work together with jQuery?
+A:  The easiest way is to use jQuery's noConflict.
+    http://docs.jquery.com/Using_jQuery_with_Other_Libraries
+
+
+Q:  Is it possible to extend elements by criteria other than tagName (e.g. by className or an attribute)?
+A:  Not in a current implementation. The extension mechanism is complex enough 
+    and such support would most likely lead to unnecessary complexity.
+
+
+Q:  Script.aculou.us wiki is down. Help!
+A:  You could use an offline version of docs.
+    http://www.m3nt0r.de/blog/scriptaculous-offline-docs/
+
+
+Q:  Are there any offline resources for prototype?
+    http://globalmoxie.com/projects/prototype-pdf/index.shtml
+    http://thinkweb2.com/projects/prototype/prototype-1602-cheat-sheet/
+    
+
+Q:  Where can I find prototype/scriptaculous tutorials?
+A:  http://www.prototypejs.org/learn
+    http://alternateidea.com/tags/prototype/
+    http://andrewdupont.net/categories/web/development/javascript/prototype/
+    http://tobielangel.com/tags/prototype
+    http://mislav.caboo.se/js/
+    http://thinkweb2.com/projects/prototype/
+    
+
+Q:  Are there any books on Prototype/Scriptaculous?
+A:  http://www.pragprog.com/titles/cppsu
+    http://www.amazon.com/Prototype-Scriptaculous-Action-Ajax-Crane/dp/1933988037
+
+
+Q:  Where can I find a packed/minified/compressed version of prototype/scriptaculous?
+A:  http://groups.google.com/group/prototype-core/files
+
+
+Q:  Where can I find 3rd party plugins/extensions for prototype/scriptaculous?
+A:  http://scripteka.com
+    http://www.ajaxrain.com/tagcloud.php?tag=prototype#script
+    http://wiki.script.aculo.us/scriptaculous/show/EffectsTreasureChest
+    
+Q:  I'm stuck. Where should I look for help?
+A:  Join #prototype channel on irc.freenode.net or use "prototype users mailing list".
+    The "prototype core" mailing list is only for development related issues.
+    http://groups-beta.google.com/group/rubyonrails-spinoffs
+    http://groups-beta.google.com/group/prototype-core
+    
