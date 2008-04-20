@@ -1,0 +1,150 @@
+Prototype FAQ
+=============
+
+
+IE throws error: "Object does not support this property or method". What happened?
+---
+DOM elements should be extended explicitly in IE
+
+  - [http://www.prototypejs.org/learn/extensions] [1]
+
+
+Error is thrown: this.[blah] is not a function. What happened?
+---
+
+This is most likely an execution context problem. Iterators (which are used in Enumerable methods) and event handlers (used in Element#observe) are executed within global context. Changing the execution context is as easy as using Function#bind or Function#bindAsEventListener
+
+  - [http://alternateidea.com/blog/articles/2007/7/18/javascript-scope-and-binding] [2]
+  - [http://www.prototypejs.org/api/enumerable] [3]
+  - [http://www.prototypejs.org/api/event/observe] [4]
+  - [http://www.prototypejs.org/api/function/bind] [5]
+  - [http://www.prototypejs.org/api/function/bindAsEventListener] [6]
+
+
+I get an unexpected output when iterating over an array using for..in.
+---
+
+for..in iterates over all properties of an object and should not (generally) be used to iterate over array indices
+
+  - [http://andrewdupont.net/2006/05/18/javascript-associative-arrays-considered-harmful/] [7]
+
+
+Something doesn't work as expected. What should I do?
+---
+  
+  - Get the latest version of prototype.
+  - Make sure a document has a proper doctype and is valid. [http://validator.w3.org/] [8]
+  - There could be a conflict with other scripts in a document. Try narrowing down the conflicting ones.
+
+
+My applications slows down when I use Event#observe on 1000+ cells in a table.
+---
+
+Event delegation could increase performance (and reduce memory usage) in such cases.
+
+  - [http://icant.co.uk/sandbox/eventdelegation/] [9]
+  - [http://cherny.com/webdev/70/javascript-event-delegation-and-event-hanlders] [10]
+  - [http://mislav.caboo.se/js/handling-events-on-elements/] [11]
+
+  
+How do I make prototype work together with jQuery?
+---
+
+The easiest way is to use jQuery's noConflict.
+  
+  - [http://docs.jquery.com/Using_jQuery_with_Other_Libraries] [12]
+
+
+Is it possible to extend elements by criteria other than tagName (e.g. by className or an attribute)?
+---
+
+Not in a current implementation. The extension mechanism is complex enough and such support would most likely lead to unnecessary complexity.
+
+
+Script.aculou.us wiki is down. Help!
+---
+
+You could use an offline version of docs.
+
+  - [http://www.m3nt0r.de/blog/scriptaculous-offline-docs/] [13]
+
+
+Are there any offline resources for prototype?
+---
+
+  - [http://globalmoxie.com/projects/prototype-pdf/index.shtml] [14]
+  - [http://thinkweb2.com/projects/prototype/prototype-1602-cheat-sheet/] [15]
+
+
+Where can I find prototype/scriptaculous tutorials?
+---
+
+  - [http://www.prototypejs.org/learn] [16]
+  - [http://alternateidea.com/tags/prototype/] [17]
+  - [http://andrewdupont.net/categories/web/development/javascript/prototype/] [18]
+  - [http://tobielangel.com/tags/prototype] [19]
+  - [http://mislav.caboo.se/js/] [20]
+  - [http://thinkweb2.com/projects/prototype/] [21]
+
+
+Are there any books on Prototype/Scriptaculous?
+---
+
+  - [http://www.pragprog.com/titles/cppsu] [22]
+  - [http://www.amazon.com/Prototype-Scriptaculous-Action-Ajax-Crane/dp/1933988037] [23]
+
+
+Where can I find a packed/minified/compressed version of prototype/scriptaculous?
+---
+
+  - [http://groups.google.com/group/prototype-core/files] [24]
+
+
+Where can I find 3rd party plugins/extensions for prototype/scriptaculous?
+---
+
+  - [http://scripteka.com] [25]
+  - [http://www.ajaxrain.com/tagcloud.php?tag=prototype#script] [26]
+  - [http://wiki.script.aculo.us/scriptaculous/show/EffectsTreasureChest] [27]
+
+
+I'm stuck. Where should I look for help?
+---
+
+  - Join #prototype channel on irc.freenode.net or use "prototype users mailing list".
+  - The "prototype core" mailing list is only for development related issues.
+  - [http://groups-beta.google.com/group/rubyonrails-spinoffs] [28]
+  - [http://groups-beta.google.com/group/prototype-core] [29]
+
+
+  
+  
+  [1]: http://www.prototypejs.org/learn/extensions
+  [2]: http://alternateidea.com/blog/articles/2007/7/18/javascript-scope-and-binding
+  [3]: http://www.prototypejs.org/api/enumerable/
+  [4]: http://www.prototypejs.org/api/event/observe/
+  [5]: http://www.prototypejs.org/api/function/bind/
+  [6]: http://www.prototypejs.org/api/function/bindAsEventListener/
+  [7]: http://andrewdupont.net/2006/05/18/javascript-associative-arrays-considered-harmful/
+  [8]: http://validator.w3.org/
+  [9]: http://icant.co.uk/sandbox/eventdelegation/
+  [10]: http://cherny.com/webdev/70/javascript-event-delegation-and-event-hanlders/
+  [11]: http://mislav.caboo.se/js/handling-events-on-elements/
+  [12]: http://docs.jquery.com/Using_jQuery_with_Other_Libraries
+  [13]: http://www.m3nt0r.de/blog/scriptaculous-offline-docs/
+  [14]: http://globalmoxie.com/projects/prototype-pdf/index.shtml
+  [15]: http://thinkweb2.com/projects/prototype/prototype-1602-cheat-sheet/
+  [16]: http://www.prototypejs.org/learn/
+  [17]: http://alternateidea.com/tags/prototype/
+  [18]: http://andrewdupont.net/categories/web/development/javascript/prototype/
+  [19]: http://tobielangel.com/tags/prototype
+  [20]: http://mislav.caboo.se/js/
+  [21]: http://thinkweb2.com/projects/prototype/
+  [22]: http://www.pragprog.com/titles/cppsu/
+  [23]: http://www.amazon.com/Prototype-Scriptaculous-Action-Ajax-Crane/dp/1933988037
+  [24]: http://groups.google.com/group/prototype-core/files
+  [25]: http://scripteka.com
+  [26]: http://www.ajaxrain.com/tagcloud.php?tag=prototype#script
+  [27]: http://wiki.script.aculo.us/scriptaculous/show/EffectsTreasureChest
+  [28]: http://groups-beta.google.com/group/rubyonrails-spinoffs
+  [29]: http://groups-beta.google.com/group/prototype-core
