@@ -16,14 +16,6 @@
  **/
 
 (function() {
-  // first declare function the proper way
-  Object.forIn = function(object, iterator, context) {
-    for (var prop in object) {
-      iterator.call(context || iterator, prop, object[prop]);
-    }
-    return object;
-  }
-  
   var isDontEnumSkipped = true;
   var DontEnumProperties = [
     'toString',
@@ -33,9 +25,22 @@
     'isPrototypeOf',
     'propertyIsEnumerable',
     'constructor'
-  ]
+  ];
   var length = DontEnumProperties.length;
   var hasOwnProperty = Object.prototype.hasOwnProperty;
+  
+  // first declare function the proper way
+  Object.forIn = function(object, iterator, context) {
+    if (!iterator || (iterator && !iterator.call))
+      throw new TypeError('Iterator function is required');
+    
+    for (var prop in object) {
+      // skip those in prototype chain
+      if (hasOwnProperty.call(object, prop))
+        iterator.call(context || iterator, prop, object[prop]);
+    }
+    return object;
+  }
   
   // test if properties that shadow DontEnum ones are enumerated
   for (var prop in { toString: true }) {
@@ -46,28 +51,49 @@
     // redeclare function for IE, 
     // make it use already defined variables from the closure
     // for perfomance reasons 
-    Object.forIn = function(object, iterator, context) {
-      for (var prop in object) {
-        iterator.call(context || iterator, prop, object[prop]);
-      }
-      // walk through "DontEnum-buggy" properties, 
-      // check if any of them are directly in the oject
-      while (length) {
-        if (hasOwnProperty.call(object, DontEnumProperties[--length])) {
-          iterator.call(context || iterator, prop, object[prop]);
+    Object.forIn = (function(original){
+      return function(object, iterator, context) {
+        original.call(original, object, iterator, context);
+        
+        // walk through "DontEnum-buggy" properties, 
+        // check if any of them are directly in the oject
+        for (var i=0; i<length; i++) {
+          if (hasOwnProperty.call(object, DontEnumProperties[i])) {
+            iterator.call(context || iterator, prop, object[prop]);
+          }
         }
+        return object;
       }
-      return object;
-    }
+    })(Object.forIn);
   }
-})()
+})();
 
+/**
+ * Object.hasProperties(object) -> Boolean
+ * - object(Any): Object to examine
+ *
+ * Returns true if object has properties (ignoring), false otherwise
+ *
+ *    Object.hasProperties({ foo: 'bar' }); // => true
+ *    Object.hasProperties({}); // => false
+ *    Object.hasProperties(13); // => false
+ *
+ **/
+Object.hasProperties = function(object) {
+  var result = false;
+  if (object) {
+    Object.forIn(object, function(){
+      result = true;
+    })
+  }
+  return result;
+}
 
 /**
  * Object.flip(object) -> object
  * - object(Any): Object whose key/values are to be flipped
  *
- *    Object.flip({foo: 'bar'}); // => { bar: 'foo' }
+ *    Object.flip({ foo: 'bar' }); // => { bar: 'foo' }
  *
  **/
 Object.flip = function(object){
@@ -76,7 +102,7 @@ Object.flip = function(object){
     clone[value] = prop;
   })
   return clone;
-}
+};
 
 /**
  * Object.find(object, iterator[, context = iterator]) -> object
@@ -97,8 +123,5 @@ Object.find = function(object, iterator, context) {
       result[key] = value;
   });
   return result;
-}
-
-
-
+};
 
