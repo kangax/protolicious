@@ -287,4 +287,17 @@ Form.Methods.unserialize = function(element, source) {
   return element;
 }
 
+/**
+ * Element.addHoverClassName(@element, className) -> @element
+ * 
+ * Observes element's mouseover/mouseout to add/remove specified className respectively
+ *
+ *    $('foo').addHoverClassName('over);
+ *
+ **/
+Form.Methods.addHoverClassName = function(element, className) {
+  return $(element).observe('mouseover', Element.addClassName.curry(element, className))
+    .observe('mouseout', Element.removeClassName.curry(element, className));
+}
+
 Element.addMethods();

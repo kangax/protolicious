@@ -72,7 +72,7 @@
  * Object.hasProperties(object) -> Boolean
  * - object(Any): Object to examine
  *
- * Returns true if object has properties (ignoring), false otherwise
+ * Returns true if object has properties (ignoring those in prototype chain), false otherwise.
  *
  *    Object.hasProperties({ foo: 'bar' }); // => true
  *    Object.hasProperties({}); // => false
@@ -124,4 +124,3 @@ Object.find = function(object, iterator, context) {
   });
   return result;
 };
-
