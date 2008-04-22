@@ -14,11 +14,11 @@ Error is thrown: this.[blah] is not a function. What happened?
 
 This is most likely an execution context problem. Iterators (which are used in Enumerable methods) and event handlers (used in Element#observe) are executed within global context. Changing the execution context is as easy as using Function#bind or Function#bindAsEventListener
 
-  - [http://alternateidea.com/blog/articles/2007/7/18/javascript-scope-and-binding] [2]
-  - [http://www.prototypejs.org/api/enumerable] [3]
-  - [http://www.prototypejs.org/api/event/observe] [4]
-  - [http://www.prototypejs.org/api/function/bind] [5]
-  - [http://www.prototypejs.org/api/function/bindAsEventListener] [6]
+  - [Javascript scope and binding] [2]
+  - [enumerable API documentation] [3]
+  - [observe API documentation] [4]
+  - [bind API documentation] [5]
+  - [bindAsEventListener API documentation] [6]
 
 
 I get an unexpected output when iterating over an array using for..in.
@@ -26,7 +26,7 @@ I get an unexpected output when iterating over an array using for..in.
 
 for..in iterates over all properties of an object and should not (generally) be used to iterate over array indices
 
-  - [http://andrewdupont.net/2006/05/18/javascript-associative-arrays-considered-harmful/] [7]
+  - [Javascript associative arrays considered harmful] [7]
 
 
 Something doesn't work as expected. What should I do?
@@ -52,7 +52,7 @@ How do I make prototype work together with jQuery?
 
 The easiest way is to use jQuery's noConflict.
   
-  - [http://docs.jquery.com/Using_jQuery_with_Other_Libraries] [12]
+  - [Using jQuery with Other Libraries] [12]
 
 
 Is it possible to extend elements by criteria other than tagName (e.g. by className or an attribute)?
@@ -66,20 +66,20 @@ Script.aculou.us wiki is down. Help!
 
 You could use an offline version of docs.
 
-  - [http://www.m3nt0r.de/blog/scriptaculous-offline-docs/] [13]
+  - [Offline Script.aculou.us documentation] [13]
 
 
 Are there any offline resources for prototype?
 ---
 
-  - [http://globalmoxie.com/projects/prototype-pdf/index.shtml] [14]
-  - [http://thinkweb2.com/projects/prototype/prototype-1602-cheat-sheet/] [15]
+  - [PDF version of Prototype API documentation] [14]
+  - [Prototype.js 1.6.0.2 Cheat Sheet] [15]
 
 
 Where can I find prototype/scriptaculous tutorials?
 ---
 
-  - [http://www.prototypejs.org/learn] [16]
+  - [Tutorials section at Prototypejs.org] [16]
   - [http://alternateidea.com/tags/prototype/] [17]
   - [http://andrewdupont.net/categories/web/development/javascript/prototype/] [18]
   - [http://tobielangel.com/tags/prototype] [19]
@@ -97,15 +97,15 @@ Are there any books on Prototype/Scriptaculous?
 Where can I find a packed/minified/compressed version of prototype/scriptaculous?
 ---
 
-  - [http://groups.google.com/group/prototype-core/files] [24]
+  - [Prototype Core Mailing List files] [24]
 
 
 Where can I find 3rd party plugins/extensions for prototype/scriptaculous?
 ---
 
-  - [http://scripteka.com] [25]
-  - [http://www.ajaxrain.com/tagcloud.php?tag=prototype#script] [26]
-  - [http://wiki.script.aculo.us/scriptaculous/show/EffectsTreasureChest] [27]
+  - [Scripteka] [25]
+  - [Ajaxrain] [26]
+  - [Script.aculo.us TreasureChest] [27]
 
 
 I'm stuck. Where should I look for help?
@@ -113,8 +113,8 @@ I'm stuck. Where should I look for help?
 
   - Join #prototype channel on irc.freenode.net or use "prototype users mailing list".
   - The "prototype core" mailing list is only for development related issues.
-  - [http://groups-beta.google.com/group/rubyonrails-spinoffs] [28]
-  - [http://groups-beta.google.com/group/prototype-core] [29]
+  - [Ruby on Rails spinoffs Mailing List] [28]
+  - [Prototype Core Mailing List] [29]
 
 
   
