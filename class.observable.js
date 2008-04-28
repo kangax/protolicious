@@ -23,7 +23,7 @@
     },
     stopObserving: function() {
       getElement(this).stopObserving.apply(null, arguments);
-    }
+    },
     fire: function(eventName) {
       getElement(this).fire(eventName);
     }
