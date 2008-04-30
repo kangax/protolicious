@@ -20,12 +20,15 @@
   Class.Observable = {
     observe: function(eventName, handler) {
       getElement(this).observe(eventName, handler);
+      return this;
     },
-    stopObserving: function() {
-      getElement(this).stopObserving.apply(null, arguments);
+    stopObserving: function(eventName, handler) {
+      getElement(this).stopObserving(eventName, handler);
+      return this;
     },
-    fire: function(eventName) {
-      getElement(this).fire(eventName);
+    fire: function(eventName, memo) {
+      getElement(this).fire(eventName, memo);
+      return this;
     }
   }
 })();
