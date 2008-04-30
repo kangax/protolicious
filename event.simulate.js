@@ -13,8 +13,8 @@ Event.simulate = function(element, eventName) {
   }, arguments[2] || { } );
   
   var eventMatchers = {
-    'HTMLEvents': /load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll/,
-    'MouseEvents': /click|mousedown|mouseup|mouseover|mousemove|mouseout/
+    'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
+    'MouseEvents': /^(?:click|mouse(?:down|up|over|move|out))$/
   };
   
   var oEvent, eventType = null;
