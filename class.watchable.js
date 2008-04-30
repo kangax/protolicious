@@ -6,10 +6,10 @@
  *
  * A convenient mixin for a naive simulation of Mozilla's proprietary Object.prototype.watch/unwatch
  * "watch" interval can be set via static Class.Watchable.INTERVAL (defaults to 100ms)
- * "watched" object is polluted with 4 properties: __clone, __handlers, __timer and __callback
+ * "watched" object is polluted with 2 properties: __watchable and __callback
  * handler is invoked with 3 arguments - propertyName, oldValue, newValue
  *
- *   var Person = Class.create(Watchable, {
+ *   var Person = Class.create(Class.Watchable, {
  *     initialize: function(name) {
  *       this.name = name;
  *     },
@@ -26,42 +26,46 @@
  *   jdd.name = "Juriy"; // fires handler associated with "name", passing it: prop, oldValue, newValue
  *
  */
-Class.Watchable = Class.create({
-  watch: function(prop, handler) {
-    // isFunction will return true for regexp (but it's too ugly to fix it here)
-    if (Object.isUndefined(prop) || !Object.isFunction(handler))
-      throw new TypeError('Wrong arguments supplied');
-    
-    if (!this.__clone) this.__clone = { };
-    this.__clone[prop] = this[prop];
-    
-    if (!this.__handlers) this.__handlers = { };
-    if (!this.__handlers[prop]) this.__handlers[prop] = [];
-    if (!this.__handlers[prop].include(handler)) this.__handlers[prop].push(handler);
+ Class.Watchable = Class.create({
+   watch: function(prop, handler) {
+     // isFunction will return true for regexp (but it's too ugly to fix it here)
+     if (Object.isUndefined(prop) || !Object.isFunction(handler))
+       throw new TypeError('Wrong arguments supplied');
 
-    if (!this.__timer)
-      this.__timer = setInterval(this.__callback.bind(this), Class.Watchable.INTERVAL);
-      
-    return this;
-  },
-  unwatch: function(prop) {
-    if (this.__clone && this.__clone[prop] && this.__clone[prop].include(handler))
-      this.__clone[prop] = this.__clone[prop].without(handler);
-    return this;
-  },
-  __callback: function() {
-    var oldValue, handlers;
-    for (var prop in this.__clone) {
-      if (this.__clone[prop] != this[prop]) {
-        oldValue = this.__clone[prop];
-        this.__clone[prop] = this[prop];
-        handlers = this.__handlers[prop];
-        for (var i=0, l=handlers.length; i<l; i++) {
-          handlers[i].call(handlers[i], prop, oldValue, newValue);
-        }
-      }
-    }
-  }
-})
+     if (!this.__watchable) this.__watchable = { };
+     var w = this.__watchable;
 
-Class.Watchable.INTERVAL = 100;
+     if (!w.clone) w.clone = { };
+     w.clone[prop] = this[prop];
+
+     if (!w.handlers) w.handlers = { };
+     if (!w.handlers[prop]) w.handlers[prop] = [ ];
+     if (!w.handlers[prop].include(handler)) w.handlers[prop].push(handler);
+
+     if (!w.timer)
+       w.timer = setInterval(this.__callback.bind(this), Class.Watchable.INTERVAL);
+
+     return this;
+   },
+   unwatch: function(prop) {
+     var w = this.__watchable;
+     if (w.clone && w.clone[prop] && w.clone[prop].include(handler))
+       w.clone[prop] = w.clone[prop].without(handler);
+     return this;
+   },
+   __callback: function() {
+     var oldValue, handlers, w = this.__watchable;
+     for (var prop in w.clone) {
+       if (w.clone[prop] != this[prop]) {
+         oldValue = w.clone[prop];
+         w.clone[prop] = this[prop];
+         handlers = w.handlers[prop];
+         for (var i=0, l=handlers.length; i<l; i++) {
+           handlers[i].call(handlers[i], prop, oldValue, this[prop]);
+         }
+       }
+     }
+   }
+ })
+
+ Class.Watchable.INTERVAL = 100;
