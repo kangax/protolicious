@@ -12,7 +12,7 @@
  *
  **/
  
-// with corrections by John David Dalton
+// with corrections by John David Dalton and juanbond
 (function(){
   function getElement(object){
     return (object._eventElement = object._eventElement || new Element('code'));
