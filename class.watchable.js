@@ -1,6 +1,9 @@
 /**
  * mixin Class.Watchable
  *
+ * - watch(property, handler) -> Object
+ * - unwatch(property) -> Object
+ *
  * A convenient mixin for a naive simulation of Mozilla's proprietary Object.prototype.watch/unwatch
  * "watch" interval can be set via static Class.Watchable.INTERVAL (defaults to 100ms)
  * "watched" object is polluted with 4 properties: __clone, __handlers, __timer and __callback
@@ -25,6 +28,9 @@
  */
 Class.Watchable = Class.create({
   watch: function(prop, handler) {
+    // isFunction will return true for regexp (but it's too ugly to fix it here)
+    if (Object.isUndefined(prop) || !Object.isFunction(handler))
+      throw new TypeError('Wrong arguments supplied');
     
     if (!this.__clone) this.__clone = { };
     this.__clone[prop] = this[prop];
