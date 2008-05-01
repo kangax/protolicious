@@ -33,7 +33,7 @@
     element = $(element);
     
     for (var name in eventMatchers) {
-      if (eventMatchers[name].test(eventName)) eventType = name;
+      if (eventMatchers[name].test(eventName)) { eventType = name; break; }
     }
 
     if (!eventType)
