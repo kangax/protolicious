@@ -300,4 +300,34 @@ Form.Methods.addHoverClassName = function(element, className) {
     .observe('mouseout', Element.removeClassName.curry(element, className));
 }
 
+/**
+ * Element.setProperty(@element, name, value) => @element
+ *
+ * - @element(Element): Element which property is to be set to a value
+ * - name(String): Name of a property
+ * - value(Any): Value of a property
+ *
+ * Dead simple helper for setting specified property of an element to a specified value.
+ * This might seem like an overkill, but it's quite useful in conjunction with #invoke,
+ * when modifying native properties of an element or creating new ones (a.k.a. expandos) in a batch.
+ * This method is somewhat similar to writeAttribute, but is intended to operate on properties, rather than attributes.
+ *
+ *
+ *    // An example of dropdown elements "bound" to each other
+ *    // (i.e. changing value of one element results in other ones "changed" to the same value)
+ *
+ *    var dropdowns = $$('select');
+ *    dropdowns.invoke('observe', 'change', function(e) {
+ *      var index = e.element().selectedIndex;
+ *      dropdowns.invoke('setProperty', 'selectedIndex', index);
+ *    })
+ *
+ *
+ **/
+Element.Methods.setProperty = function(element, name, value) {
+  if (!(element = $(element))) return;
+  element[name] = value;
+  return element;
+}
+
 Element.addMethods();
