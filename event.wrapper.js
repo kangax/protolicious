@@ -14,9 +14,7 @@ Event.extend = (function() {
   
   var methods = { };
   for (var prop in Event.Methods) {
-    methods[prop] = K(function() {
-      return Event.Methods[prop].apply(null, [this.originalEvent].concat($A(arguments)))
-    })
+    methods[prop] = K(Event.Methods[prop].apply(null, [this.originalEvent].concat($A(arguments))))
   }
   
   methods.stopPropagation = Prototype.Browser.IE
@@ -29,12 +27,12 @@ Event.extend = (function() {
   
   function init(event) {
     extend(this, event);
-    event._wrapper = this;
-    this.originalEvent = event;
-    this.stopped       = event.stopped;
-    this.memo          = event.memo;
-    this.eventName     = event.eventName;
-    this.timeStamp     = (new Date).getTime();
+    event._wrapper      = this;
+    this.originalEvent  = event;
+    this.stopped        = event.stopped;
+    this.memo           = event.memo;
+    this.eventName      = event.eventName;
+    this.timeStamp      = (new Date).getTime();
   }
   
   if (Prototype.Browser.IE)
