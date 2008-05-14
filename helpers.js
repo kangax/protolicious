@@ -72,20 +72,6 @@ Ajax.Responders.register({
   }
 });
 
-
-/**
- * Strip event handlers when removing an element
- *
- */
-Element.Methods.remove = Element.Methods.remove.wrap(
-  function(proceed, element) {
-    element = $(element);
-    [element].concat(element.descendants()).each(Element.stopObserving);
-    return proceed(element);
-  }
-);
-
-
 /**
  * Removes element from the document, returning it's HTML representation
  *
