@@ -15,7 +15,6 @@ Element.Methods.contains = function(element, pattern) {
   return !!element.innerHTML.stripTags().match(pattern);
 }
 
-
 /**
  *  Array#namespace(parrent=window) -> Array
  *  - parent(Object): top level object to start injection from
@@ -32,35 +31,6 @@ Array.prototype.namespace = function(parent) {
     return object[property] = object[property] || { };
   })
 };
-
-/**
- * Returns negated function
- * 
- * e.g. Find all hidden elements:
- * 
- * $$('*').findAll(function(element) { return !element.visible() }); // old way
- * $$('*').findAll(Element.visible.negate()); // using negate
- *
- */
-Function.prototype.negate = function() {
-  var f = this;
-  return function() {
-    return !f.apply(f, arguments);
-  }
-};
-
-/**
- * Calls and returns function
- *
- * myElement.toggle();
- * input.observe('change', myElement.toggle); // old way
- * 
- * input.observe('change', myElement.toggle.invoke()); // using invoke
- */
-Function.prototype.invoke = function() {
-  this.apply(this, $A(arguments)); return this;
-};
-
 
 /**
  * Preventing IE from caching Ajax requests
@@ -129,38 +99,6 @@ Element.Methods.toHTML = function(element) {
       || element.cloneNode(true).wrap().innerHTML);
   }
 };
-
-
-(function(){
-  Prototype.Q = {}
-  for (var method in Element.methods) {
-    Prototype.Q[method] = function(){ return Prototype.Q }
-  }
-  $ = $.wrap(function(){
-    var args = $A(arguments), proceed = args.shift();
-    return proceed.apply(proceed, args) || Prototype.Q;
-  })
-})();
-
-
-/*
-
-Label support in Safari 2
-
-
-document.observe('click', function(e) {
-  var target = e.findElement('label[for]');
-  if (!target) return;
-  var input = $(target.readAttribute('for'));
-  if (!input) return;
-  input.focus();
-  if (input.type && (/radio|checkbox/).test(input.type)) {
-    input.click();
-  }
-})
-
-*/
-
 
 /**
  * Boosts Field#present to work somewhat more reasonably 
