@@ -10,17 +10,12 @@
     
     <script src="../lib/prototype.js" type="text/javascript"></script>
     <script src="../lib/unittest.js" type="text/javascript"></script>
-    <script src="../helpers.js" type="text/javascript"></script>
+    <script src="../function.extensions.js" type="text/javascript"></script>
+    <script src="../object.extensions.js" type="text/javascript"></script>
     
   </head>
   <body>
-    <div id="testlog">
-      
-    </div>
-    <div id="container">
-      foo bar Bazz
-      <span>and some more</span>
-    </div>
+    <div id="testlog"></div>
     
     <script type="text/javascript">
       new Test.Unit.Runner({
@@ -58,11 +53,19 @@
           this.assert(falsy.negate()());
         },
         
-        testElementContains: function() {
-          this.assert($('container').contains('foo'));
-          this.assert(!$('container').contains('Foo'));
-          this.assert($('container').contains(/baz./i));
-          this.assert(!$('container').contains(/blah/));
+        testFunctionK: function() {
+          this.assert(Function.K(true)());
+          this.assert(!Function.K(false)());
+          this.assertEqual('foo', Function.K('foo')());
+          
+          var source = { foo: 'bar', baz: 'qux' }, dest = { };
+          // "prop" variable should NOT be shared via closure
+          for (var prop in source) {
+            dest[prop] = Function.K(prop);
+          }
+          
+          this.assertEqual('foo', dest.foo());
+          this.assertEqual('baz', dest.baz());
         }
         
       })
