@@ -1,10 +1,10 @@
 /**
- * Are any of the form fields empty?
+ * Returns true when element's value is "blank" (consists of 0 or more whitespaces)
  *
  */
-Field.Methods.isEmpty = function(element) {
-  return $(element).getElements().any(Element.present);
-};
+Field.Methods.isBlank = function(element) {
+  return $F(element).blank();
+}
 
 /**
  * Boosts Field#present to work somewhat more reasonably 
