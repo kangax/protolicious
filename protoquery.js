@@ -40,6 +40,13 @@
   Wrapper.addMethods({
     inspect: function(){
       return Object.inspect(this.elements);
+    },
+    hover: function(over, out) {
+      this.observe('mouseover', function(e) {
+        over.call(e.target, e);
+      }).observe('mouseout', function(e) {
+        out.call(e.target, e);
+      });
     }
   });
   
