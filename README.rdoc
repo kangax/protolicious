@@ -9,29 +9,29 @@ protolicious is a set of javascript snippets based on prototype.js
 * Element#enableClassName
 * Element#contains
 
-Function.K
-Function#negate
-Function#runOnce
-Function#_new
+* Function.K
+* Function#negate
+* Function#runOnce
+* Function#_new
 
-Array#sum
-Array#namespace
+* Array#sum
+* Array#namespace
 
-Field#isBlank
-Field#present
+* Field#isBlank
+* Field#present
 
-Form#unserialize
+* Form#unserialize
 
-Event.simulate
-Event.register
-Event.unregister
+* Event.simulate
+* Event.register
+* Event.unregister
 
-Cookie.set
-Cookie.get
-Cookie.unset
+* Cookie.set
+* Cookie.get
+* Cookie.unset
 
-Prototype.addScript
-Prototype.addStylesheet
+* Prototype.addScript
+* Prototype.addStylesheet
 
 == License
 
