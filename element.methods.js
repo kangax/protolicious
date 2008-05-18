@@ -77,7 +77,9 @@ Element.Methods._observe = Element.observe.wrap(function(proceed, element, event
  * 
  * Observes element's mouseover/mouseout to add/remove specified className respectively
  *
- *    $('foo').addHoverClassName('over);
+ *    $('foo').addHoverClassName('over');
+ *
+ * TODO: change mouseover/mouseout to Andrew's "mouse:enter"/"mouse:leave"
  *
  **/
 Element.Methods.addHoverClassName = function(element, className) {
@@ -127,10 +129,26 @@ Element.Methods.setProperty = function(element, name, value) {
  **/
 Element.Methods.swapClassName = function(element, first, second) {
   return Element.removeClassName(element, first).addClassName(second);
-}
+};
+
+/**
+ * Element.enableClassName(@element, className, condition) => @element
+ *
+ * - @element(Element): Element which className is to be enabled (toggled)
+ * - first(String): Class to enable (toggle)
+ * - condition(Boolean): Condition based on which className will be enabled (toggled)
+ *
+ * var hasContent = $('foo').select('input[type=text]').any(function(el) {
+ *   return !$F(el).blank();
+ * })
+ *
+ * $('foo).enableClassName('hasContent', hasContent);
+ * // same as
+ * $('foo')[hasContent ? 'addClassName' : 'removeClassName']('hasContent');
+ *
+ **/
 Element.Methods.enableClassName = function(element, className, condition) {
   return Element[condition ? 'addClassName' : 'removeClassName'](element, className);
-}
-
+};
 
 Element.addMethods();
