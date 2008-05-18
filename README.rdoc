@@ -1,6 +1,37 @@
-== Description
+== What it is
 
 protolicious is a set of javascript snippets based on prototype.js
+
+== What's inside?
+
+Element#setProperty
+Element#swapClassName
+Element#enableClassName
+Element#contains
+
+Function.K
+Function#negate
+Function#runOnce
+Function#_new
+
+Array#sum
+Array#namespace
+
+Field#isBlank
+Field#present
+
+Form#unserialize
+
+Event.simulate
+Event.register
+Event.unregister
+
+Cookie.set
+Cookie.get
+Cookie.unset
+
+Prototype.addScript
+Prototype.addStylesheet
 
 == License
 
