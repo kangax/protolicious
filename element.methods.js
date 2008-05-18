@@ -115,4 +115,22 @@ Element.Methods.setProperty = function(element, name, value) {
   return element;
 };
 
+/**
+ * Element.swapClassName(@element, first, second) => @element
+ *
+ * - @element(Element): Element which className is to be swapped
+ * - first(String): Class to remove 
+ * - second(String): Class to add
+ *
+ * $('foo).swapClassName('active', 'inactive');
+ *
+ **/
+Element.Methods.swapClassName = function(element, first, second) {
+  return Element.removeClassName(element, first).addClassName(second);
+}
+Element.Methods.enableClassName = function(element, className, condition) {
+  return Element[condition ? 'addClassName' : 'removeClassName'](element, className);
+}
+
+
 Element.addMethods();
