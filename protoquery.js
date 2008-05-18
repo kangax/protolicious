@@ -11,14 +11,11 @@
 // etc.
 
 (function(){
-  var global = (function(){ return this })(), slice = Array.prototype.slice;
+  var global = (function(){ return this })();
   
   var Wrapper = Class.create({
     initialize: function(selector) {
       this.elements = $$(selector);
-    },
-    inspect: function() {
-      return Object.inspect(this.elements);
     },
     _each: function(iterator) {
       this.elements._each(iterator);
@@ -38,9 +35,15 @@
         return this;
       }
     })(method);
-  }
+  };
+  
+  Wrapper.addMethods({
+    inspect: function(){
+      return Object.inspect(this.elements);
+    }
+  });
   
   global.$Q = function(selector) {
     return new Wrapper(selector);
-  }
+  };
 })();
