@@ -4,6 +4,9 @@
 // $Q('div').addClassName('foo').show().next().hide();
 // // selects all div elements, adds className 'foo' to them, then selects next elements (nextSibling) after all 'div's and hides them
 //
+// $Q('div.collapsible').click(function(){ this.toggle() });
+// // toggles all div elements with 'collapsible' className when clicked
+//
 // Returned object mixes Enumerable in, so you could always do:
 //
 // $Q('tr td').invoke('show');
@@ -48,6 +51,15 @@
         out.call(e.target, e);
       });
     }
+  });
+  
+  $w('blur change click dblclick error focus keydown keypress keyup load mousedown ' +
+  'mousemove mouseout mouseover mouseup resize scroll select submit unload').each(function(eventName) {
+    Wrapper.prototype[eventName] = (function(eventName){
+      return function(handler) {
+        return this.observe(eventName, handler);
+      }
+    })(eventName);
   });
   
   global.$Q = function(selector) {
