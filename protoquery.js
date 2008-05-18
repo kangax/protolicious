@@ -15,7 +15,7 @@
   
   var Wrapper = Class.create({
     initialize: function(selector) {
-      this.elements = $$(selector);
+      this.elements = Object.isElement(selector) ? [selector] : $$(selector);
     },
     _each: function(iterator) {
       this.elements._each(iterator);
