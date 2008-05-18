@@ -22,3 +22,17 @@ Object._isFunction2 = function(o) {
   return Object.prototype.toString
     .call(o).indexOf('Function') != -1;
 }
+
+/**
+ * Object.directProperties(object) -> Array
+ *
+ * Returns array of object's "direct" properties (i.e. those that are NOT resolved via object's prototype chain)
+ *
+ **/
+Object.directProperties = function(o) {
+  var result = [], hop = Object.prototype.hasOwnProperty;
+  for (var prop in o) {
+    hop.call(o, prop) && result.push(prop);
+  }
+  return result;
+}
