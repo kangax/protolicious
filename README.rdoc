@@ -5,33 +5,33 @@ protolicious is a set of javascript snippets based on prototype.js
 == What's inside?
 
 * <tt>Element#setProperty</tt>
-* Element#swapClassName
-* Element#enableClassName
-* Element#contains
+* <tt>Element#swapClassName</tt>
+* <tt>Element#enableClassName</tt>
+* <tt>Element#contains</tt>
 
-* Function.K
-* Function#negate
-* Function#runOnce
-* Function#_new
+* <tt>Function.K</tt>
+* <tt>Function#negate</tt>
+* <tt>Function#runOnce</tt>
+* <tt>Function#_new</tt>
 
-* Array#sum
-* Array#namespace
+* <tt>Array#sum</tt>
+* <tt>Array#namespace</tt>
 
-* Field#isBlank
-* Field#present
+* <tt>Field#isBlank</tt>
+* <tt>Field#present</tt>
 
-* Form#unserialize
+* <tt>Form#unserialize</tt>
 
-* Event.simulate
-* Event.register
-* Event.unregister
+* <tt>Event.simulate</tt>
+* <tt>Event.register</tt>
+* <tt>Event.unregister</tt>
 
-* Cookie.set
-* Cookie.get
-* Cookie.unset
+* <tt>Cookie.set</tt>
+* <tt>Cookie.get</tt>
+* <tt>Cookie.unset</tt>
 
-* Prototype.addScript
-* Prototype.addStylesheet
+* <tt>Prototype.addScript</tt>
+* <tt>Prototype.addStylesheet</tt>
 
 == License
 
