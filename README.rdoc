@@ -4,10 +4,10 @@ protolicious is a set of javascript snippets based on prototype.js
 
 == What's inside?
 
-Element#setProperty
-Element#swapClassName
-Element#enableClassName
-Element#contains
+* Element#setProperty
+* Element#swapClassName
+* Element#enableClassName
+* Element#contains
 
 Function.K
 Function#negate
