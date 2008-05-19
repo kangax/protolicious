@@ -4,34 +4,54 @@ protolicious is a set of javascript snippets based on prototype.js
 
 == What's inside?
 
+== Element (Element.Methods) extensions
+
 * <tt>Element#setProperty</tt>
 * <tt>Element#swapClassName</tt>
 * <tt>Element#enableClassName</tt>
 * <tt>Element#contains</tt>
+
+== Function extensions
 
 * <tt>Function.K</tt>
 * <tt>Function#negate</tt>
 * <tt>Function#runOnce</tt>
 * <tt>Function#_new</tt>
 
+== Array extensions
+
 * <tt>Array#sum</tt>
 * <tt>Array#namespace</tt>
+
+== Field (Form.Element.Methods) extensions
 
 * <tt>Field#isBlank</tt>
 * <tt>Field#present</tt>
 
+== Form (Form.Methods) extensions
+
 * <tt>Form#unserialize</tt>
+
+== Event extensions
 
 * <tt>Event.simulate</tt>
 * <tt>Event.register</tt>
 * <tt>Event.unregister</tt>
 
+== Cookie
+
 * <tt>Cookie.set</tt>
 * <tt>Cookie.get</tt>
 * <tt>Cookie.unset</tt>
 
+== Prototype
+
 * <tt>Prototype.addScript</tt>
 * <tt>Prototype.addStylesheet</tt>
+
+== Object extensions
+
+* <tt>Object.isEvent</tt>
 
 == License
 
