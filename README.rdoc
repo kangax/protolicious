@@ -1,8 +1,8 @@
-== What it is
+= Description
 
-protolicious is a set of javascript snippets based on prototype.js
+Protolicious is a set of javascript snippets based on prototype.js
 
-== What's inside?
+= Contents
 
 == Element (Element.Methods) extensions
 
@@ -53,6 +53,6 @@ protolicious is a set of javascript snippets based on prototype.js
 
 * <tt>Object.isEvent</tt>
 
-== License
+= License
 
 protolicious is licensed under the terms of the MIT license
