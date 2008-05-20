@@ -54,6 +54,7 @@ Protolicious is a set of javascript snippets based on prototype.js
 == Object extensions
 
 * <tt>Object.isEvent</tt>
+* <tt>Object.methodize</tt>
 
 = License
 
