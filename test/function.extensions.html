@@ -16,6 +16,7 @@
   <body>
     <div id="testlog"></div>
     <div id="dummy">foo</div>
+    <div id="runOnceDummy"></div>
     
     <script type="text/javascript">
       new Test.Unit.Runner({
@@ -31,6 +32,38 @@
           this.assert(falsy.negate()());
         },
         
+        testFunctionPrototypeRunOnce: function() {
+          function updater(){
+            $('runOnceDummy').update('foo');
+          };
+          this.assertIdentical('', $('runOnceDummy').innerHTML); // contents should be empty
+          this.assertIdentical('function', typeof updater.runOnce()); // should return function
+          this.assertIdentical('foo', $('runOnceDummy').innerHTML); // should update content when run
+        },
+        
+        testFunctionPrototypeNew: function() {
+          var Person = Class.create({
+            initialize: function(name) { this.name = name },
+            speak: function(message) { return this.name + ': ' + message }
+          })
+          var jd = Person._new('John');
+          this.assert(jd instanceof Person);
+          this.assertIdentical('John', jd.name);
+          this.assertIdentical('John: hi there', jd.speak('hi there'));
+        },
+        
+        testFunctionPrototypeToDelayed: function() {
+          var delayed = (function(){
+            $('dummy').addClassName('foo');
+          }).toDelayed(1);
+          
+          delayed();
+          this.assert(!$('dummy').hasClassName('foo'));
+          this.wait(1000, (function(){
+            this.assert($('dummy').hasClassName('foo'));
+          }).bind(this))
+        },
+        
         testFunctionK: function() {
           this.assert(Function.K(true)());
           this.assert(!Function.K(false)());
@@ -44,18 +77,6 @@
           
           this.assertEqual('foo', dest.foo());
           this.assertEqual('baz', dest.baz());
-        },
-        
-        testFunctionPrototypeToDelayed: function() {
-          var delayed = (function(){
-            $('dummy').addClassName('foo');
-          }).toDelayed(2);
-          
-          delayed();
-          this.assert(!$('dummy').hasClassName('foo'));
-          this.wait(2000, (function(){
-            this.assert($('dummy').hasClassName('foo'));
-          }).bind(this))
         }
         
       })
