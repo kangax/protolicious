@@ -35,7 +35,7 @@ Object.directProperties = function(o) {
     hop.call(o, prop) && result.push(prop);
   }
   return result;
-}
+};
 
 /**
  * Object.isEvent(object) -> Boolean
@@ -60,4 +60,32 @@ Object.directProperties = function(o) {
  **/
 Object.isEvent = function(object) {
   return object && Object.isString(object.type) && Object.isBoolean(object.bubbles);
-}
+};
+
+/**
+ * Object.methodize(object) -> Object
+ *
+ * Returns a clone of a passed in object but with all functions methodized
+ *
+ *
+ *
+ // maybe try the "plain vanilla" way (?),
+ // since converting object to an array and then back to an object seems excessive
+ // eliminating #inject should make things faster as well
+ 
+ var methodized = { };
+ for (var prop in object) {
+   if (!object[prop].methodize) continue;
+   methodized[prop] = (function(prop){
+     return object[prop].methodize();
+   })(prop);
+ }
+ return methodized;
+ 
+ */
+Object.methodize = function(object) {
+  return Object.keys(object).inject({ }, function(m, name) {
+    m[name] = object[name].methodize();
+    return m;
+  });
+};
