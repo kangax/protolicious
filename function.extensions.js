@@ -27,7 +27,7 @@ Function.prototype.negate = function() {
 Function.prototype.runOnce = function() {
   this.apply(this, arguments);
   return this;
-}
+};
 
 /**
  * Invokes function as a constructor
@@ -75,7 +75,7 @@ Function.prototype.toDelayed = function(timeout) {
  **/
 Function.prototype.toDeferred = function() {
   return this.toDelayed(0.01);
-}
+};
 
 /**
  * Creates a function which returns specified value.
@@ -95,4 +95,37 @@ Function.K = function(k){
   return function() {
     return k;
   }
-}
+};
+
+/**
+ * Function.prototype.addAdvice(advices) -> Function
+ * - advices(Object): collection of key/value pairs where key is type of advice and value is advice itself
+ *
+ *  function sum(){
+ *   return $A(arguments).inject(0, function(result, value){ return result + value; });
+ *  }
+ *
+ * sum = sum.addAdvice({
+ *   before: function() { console.log('receiving: ' + $A(arguments)) },
+ *   after: function() { console.log('returning: ' + $A(arguments)) }
+ * });
+ *
+ * sum(1,2,3);
+ *
+ * logs:
+ * receiving: 1,2,3
+ * returning: 6
+ *
+ **/
+Function.prototype.addAdvice = function(advices) {
+  return this.wrap(function() {
+    var args = $A(arguments), proceed = args.shift();
+    var a = advices, bf = a.before, ar = a.around, af = a.after;
+    bf && bf.apply(proceed, args);
+    ar && ar.apply(proceed, args);
+    var result = proceed.apply(proceed, args);
+    ar && ar.apply(proceed, result);
+    af && af.apply(proceed, result);
+    return result;
+  })
+};
