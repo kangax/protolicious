@@ -21,16 +21,16 @@
     
     <script type="text/javascript">
       new Test.Unit.Runner({
-        testFunctionPrototypeNegate: function() {
+        testFunctionPrototypeNot: function() {
           
           var truthy = function() { return true; };
           var falsy = function() { return false; };
           var something = function() { return {foo: 'bar'} };
           
           this.assert(truthy());
-          this.assert(!truthy.negate()());
+          this.assert(!truthy.not()());
           this.assert(!falsy());
-          this.assert(falsy.negate()());
+          this.assert(falsy.not()());
         },
         
         testFunctionPrototypeRunOnce: function() {

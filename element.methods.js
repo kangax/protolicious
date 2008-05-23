@@ -151,4 +151,38 @@ Element.Methods.enableClassName = function(element, className, condition) {
   return Element[condition ? 'addClassName' : 'removeClassName'](element, className);
 };
 
+/**
+ * Element.wrapContent(@element, wrapper, attributes) -> @element
+ *
+ * Wraps element's content with wrapper (i.e. a DOMElement or an html string)
+ *
+ *
+ *    <pre id="foo">
+ *      some content <span>some tag</span>
+ *    </pre>
+ *    ...
+ *    $('foo').wrapContent('<code class="javascript">');
+ *    ...
+ *    <pre>
+ *      <code class="javascript"> 
+ *        some content <span>some tag</span>
+ *      </code>
+ *    </pre>
+ *
+ **/
+Element.Methods.wrapContent = function(element, wrapper, attributes) {
+  if (!(element = $(element))) return;
+  if (Object.isElement(wrapper))
+    $(wrapper).writeAttribute(attributes || { })
+  else if (Object.isString(wrapper))
+    wrapper = new Element(wrapper, attributes);
+  else wrapper = new Element('div', wrapper);
+  
+  while (element.firstChild)
+    wrapper.appendChild(element.firstChild)
+  
+  element.appendChild(wrapper);
+  return element;
+};
+
 Element.addMethods();

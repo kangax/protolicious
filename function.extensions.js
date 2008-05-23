@@ -1,15 +1,15 @@
 /**
- * Function#negate() -> Function
+ * Function#not() -> Function
  *
  * Returns negated function
  * 
  * Find all hidden elements:
  * 
  * $$('*').findAll(function(element) { return !element.visible() }); // old way
- * $$('*').findAll(Element.visible.negate()); // using negate
+ * $$('*').findAll(Element.visible.not()); // using not
  *
  **/
-Function.prototype.negate = function() {
+Function.prototype.not = function() {
   var f = this;
   return function() {
     return !f.apply(f, arguments);
@@ -44,7 +44,7 @@ Function.prototype.runOnce = function() {
  *
  **/
 Function.prototype._new = function() {
-  var __method = this, args = arguments;
+  var __method = this, args = $A(arguments);
   function C() { return __method.apply(this, args); };
   C.prototype = __method.prototype;
   return new C;
