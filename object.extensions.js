@@ -59,7 +59,10 @@ Object.directProperties = function(o) {
  *
  **/
 Object.isEvent = function(object) {
-  return object && Object.isString(object.type) && Object.isBoolean(object.bubbles);
+  return !!(object &&
+    object.target &&
+    Object.isNumber(object.target.nodeType) &&
+    Object.isString(object.type));
 };
 
 /**

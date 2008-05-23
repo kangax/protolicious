@@ -17,6 +17,7 @@
     <div id="testlog"></div>
     <div id="dummy">foo</div>
     <div id="runOnceDummy"></div>
+    <div id="addAdviceDummy"></div>
     
     <script type="text/javascript">
       new Test.Unit.Runner({
@@ -41,7 +42,7 @@
           this.assertIdentical('foo', $('runOnceDummy').innerHTML); // should update content when run
         },
         
-        testFunctionPrototypeNew: function() {
+        testFunctionPrototype_New: function() {
           var Person = Class.create({
             initialize: function(name) { this.name = name },
             speak: function(message) { return this.name + ': ' + message }
@@ -77,6 +78,26 @@
           
           this.assertEqual('foo', dest.foo());
           this.assertEqual('baz', dest.baz());
+        },
+        
+        testFunctionPrototypeAddAdvice: function() {
+          Element.addMethods({
+            addClassName: Element.Methods.addClassName.addAdvice({
+              before: function(element, className) {
+                // when passed 'draggable' to addClassName, set element's position to 'absolute'
+                if (className == 'draggable')
+                  $(element).absolutize();
+              }
+            })
+          });
+          // should not be "absolute" initially
+          this.assertNotEqual('absolute', $('addAdviceDummy').getStyle('position'));
+          Element.addClassName('addAdviceDummy', 'foo');
+          // should not be "absolute" after assigning "foo" className
+          this.assertNotEqual('absolute', $('addAdviceDummy').getStyle('position'));
+          Element.addClassName('addAdviceDummy', 'draggable');
+          // should be "absolute" after assigning "draggable" className
+          this.assertEqual('absolute', $('addAdviceDummy').getStyle('position'));
         }
         
       })

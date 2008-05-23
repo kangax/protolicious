@@ -21,7 +21,7 @@
     
     <script type="text/javascript">
       new Test.Unit.Runner({
-        testSetProperty: function() {
+        testElementMethodsSetProperty: function() {
           this.assert(!$('dummy_input').disabled); // should not be disabled
           $('dummy_input').setProperty('disabled', true);
           this.assert($('dummy_input').disabled); // should be disabled after setting

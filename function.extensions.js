@@ -1,7 +1,9 @@
 /**
+ * Function#negate() -> Function
+ *
  * Returns negated function
  * 
- * e.g. Find all hidden elements:
+ * Find all hidden elements:
  * 
  * $$('*').findAll(function(element) { return !element.visible() }); // old way
  * $$('*').findAll(Element.visible.negate()); // using negate

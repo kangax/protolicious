@@ -18,7 +18,7 @@
     
     <script type="text/javascript">
       new Test.Unit.Runner({
-        testIsFunction: function() {
+        testObject_IsFunction: function() {
           [
             null, 
             undefined,
@@ -37,7 +37,48 @@
 
           this.assert(Object._isFunction(function(){}));
           this.assert(Object._isFunction(document.createElement));
-        }        
+        },
+        
+        testObjectDirectProperties: function() {
+          var dummy = { foo: 'bar', baz: true, toString: function(){ return false; } }
+          function Person(){ this.name = name; };
+          Person.prototype.speak = function(message){ return this.name + ': ' + message };
+          
+          this.assertEnumEqual(['foo', 'baz', 'toString'], Object.directProperties(dummy));
+          this.assertIdentical(0, Object.directProperties([]).length);
+          this.assertIdentical(0, Object.directProperties('').length);
+          // properties from the prototype chain should not be included
+          this.assertEnumEqual(['name'], Object.directProperties(new Person('John')));
+        },
+        
+        testObjectIsEvent: function() {
+          document.observe('foo:bar', function(e) {
+            this.assert(Object.isEvent(e));
+          }.bind(this));
+          document.fire('foo:bar');
+          this.assert(!Object.isEvent({}));
+          this.assert(!Object.isEvent(''));
+          this.assert(!Object.isEvent(5));
+          this.assert(!Object.isEvent(/foo/));
+          this.assert(!Object.isEvent(function(){}));
+        },
+        
+        testObjectMethodize: function() {
+          var functions = {
+            isFoo: function(string) {
+              return /foo/.test(string);
+            },
+            isLengthEven: function(string) {
+              return !(string.length % 2);
+            }
+          }
+          Object.extend(String.prototype, Object.methodize(functions));
+          
+          this.assert('foo'.isFoo());
+          this.assert(!''.isFoo());
+          this.assert('blah'.isLengthEven());
+          this.assert(!'bla'.isLengthEven());
+        }
       })
     </script>
     
