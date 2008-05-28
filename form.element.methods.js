@@ -27,3 +27,5 @@ Field.Methods.present = function(element) {
     (t == 'radio' && (element.checked || $$('input[name=' + element.name + ']:checked').length))
     (/select-one|select-multiple/.test(t) && element.selectedIndex != -1));
 };
+
+Element.addMethods();
