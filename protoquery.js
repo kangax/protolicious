@@ -29,13 +29,19 @@
   for (var method in Element.Methods) {
     if (method == 'Simulated' || method == 'ByTag') continue;
     Wrapper.prototype[method] = (function(method){
+      var result, returnFirst = false;
       return function() {
         var args = $A(arguments);
         this.elements = this.elements.map(function(element) {
-          var result = Element.Methods[method].apply(null, [element].concat(args));
-          return Object.isElement(result) ? result : element;
+          result = Element.Methods[method].apply(null, [element].concat(args));
+          if (Object.isBoolean(result) || Object.isString(result)) {
+            throw $break;
+            returnFirst = true;
+          }
+          if (Object.isElement(result)) return result;
+          return element;
         }).compact();
-        return this;
+        return returnFirst ? result : this;
       }
     })(method);
   };
