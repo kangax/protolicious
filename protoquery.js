@@ -14,7 +14,6 @@
 // etc.
 
 (function(){
-  var global = (function(){ return this })();
   
   var Wrapper = Class.create({
     initialize: function(selector) {
@@ -33,7 +32,8 @@
       return function() {
         var args = $A(arguments);
         this.elements = this.elements.map(function(element) {
-          return Element.Methods[method].apply(null, [element].concat(args));
+          var result = Element.Methods[method].apply(null, [element].concat(args));
+          return Object.isElement(result) ? result : element;
         }).compact();
         return this;
       }
@@ -45,11 +45,17 @@
       return Object.inspect(this.elements);
     },
     hover: function(over, out) {
-      this.observe('mouseover', function(e) {
+      return this.observe('mouseover', function(e) {
         over.call(e.target, e);
       }).observe('mouseout', function(e) {
         out.call(e.target, e);
       });
+    },
+    setProperty: function(name, value) {
+      this.each(function(element) {
+        element[name] = value;
+      });
+      return this;
     }
   });
   
@@ -62,7 +68,7 @@
     })(eventName);
   });
   
-  global.$Q = function(selector) {
+  this.$Q = function(selector) {
     return new Wrapper(selector);
   };
 })();
