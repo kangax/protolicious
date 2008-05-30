@@ -18,22 +18,33 @@
     <div id="dummy_div">foo</div>
     <input type="text" name="dummy_input" value="dummy value" id="dummy_input" />
     <input type="checkbox" name="dummy_checkbox" value="" checked="checked" id="dummy_checkbox" />
+    <div id="wrap_dummy">foo bar baz</div>
+    <div id="contains_dummy">blah // foo \ some other text &copy;</div>
     
     <script type="text/javascript">
       new Test.Unit.Runner({
         testElementMethodsSetProperty: function() {
-          this.assert(!$('dummy_input').disabled); // should not be disabled
           $('dummy_input').setProperty('disabled', true);
           this.assert($('dummy_input').disabled); // should be disabled after setting
           $('dummy_div').setProperty('foo', 'bar');
           this.assertIdentical('bar', $('dummy_div').foo); // property should be set
-          this.assert($('dummy_checkbox').checked); // should be checked initially
           $('dummy_checkbox').setProperty('checked', false);
           this.assert(!$('dummy_checkbox').checked); // should NOT be checked
           $$('input').invoke('setProperty', 'className', 'foo');
           $$('input').each(function(el) {
             this.assertIdentical('foo', el.className);
           }, this);
+        },
+        testElementMethodsWrapContent: function() {
+          $('wrap_dummy').wrapContent('pre', { className: 'code', id: 53 });
+          this.assert($('wrap_dummy').down('pre'));
+          this.assertIdentical('code', $('wrap_dummy').down('pre').className);
+          this.assertIdentical('53', $('wrap_dummy').down('pre').id);
+        },
+        testElementMethodsContains: function() {
+          this.assert($('contains_dummy').contains('blah'));
+          this.assert(!$('contains_dummy').contains('fooo'));
+          this.assert($('contains_dummy').contains(/bla.\s/));
         }
       })
     </script>
