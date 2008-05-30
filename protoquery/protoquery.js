@@ -54,20 +54,22 @@ $Q.addMethods({
   });
   
   for (var method in Element.Methods) {
-    if (method == 'Simulated' || method == 'ByTag') continue;
+    if (/^Simulated|ByTag|classNames|getElementsByClassName|getElementsBySelector|immediateDescendants$/.test(method)) continue;
     Wrapper.prototype[method] = (function(method){
-      var result, returnFirst = false;
       return function() { 
-        var args = $A(arguments);
-        this.elements = this.elements.map(function(element) {
-          result = Element.Methods[method].apply(null, [element].concat(args));
+        var args = $A(arguments), returnFirst = false, result, _elements = [];
+        this.elements.each(function(element, i) {
+          result = Element.Methods[method].apply(null, args.length ? [element].concat(args) : [element]);
           if (Object.isUndefined(result) || !Object.isElement(result)) {
             returnFirst = true;
             throw $break;
           }
-          return result ? element : null;
-        }).compact();
-        return returnFirst ? result : this;
+          result && (_elements[i] = element);
+        });
+        
+        if (returnFirst) return result;
+        this.elements = _elements;
+        return this;
       }
     })(method);
   };
