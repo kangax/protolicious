@@ -30,10 +30,8 @@ Element.Methods.toTemplate = function(element) {
  *
  */ 
 Element.Methods.replaceAttribute = function(element, attr, pattern, replacement) {
-  element = $(element);
-  return el.writeAttribute(attr, element.readAttribute(attr)
-    .replace(new RegExp(pattern), replacement)
-  )
+  return Element.writeAttribute(element, attr, element.readAttribute(attr)
+    .replace(new RegExp(pattern), replacement))
 };
 
 /**

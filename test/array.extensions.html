@@ -21,6 +21,11 @@
         testArrayPrototypeSum: function() {
           this.assertIdentical(6, [1,2,3].sum());
           this.assertIdentical(10, ['1', 2, '3', 4, '', '', '', null, 0].sum());
+        },
+        testArrayPrototypeClone: function() {
+          var arr = [1,2,3];
+          this.assertNotEqual(arr, arr.clone());
+          this.assertEnumEqual([1,2,3], arr.clone());
         }
       })
     </script>

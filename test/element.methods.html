@@ -20,6 +20,7 @@
     <input type="checkbox" name="dummy_checkbox" value="" checked="checked" id="dummy_checkbox" />
     <div id="wrap_dummy">foo bar baz</div>
     <div id="contains_dummy">blah // foo \ some other text &copy;</div>
+    <div id="replace_html_dummy">some content...</div>
     
     <script type="text/javascript">
       new Test.Unit.Runner({
@@ -45,6 +46,16 @@
           this.assert($('contains_dummy').contains('blah'));
           this.assert(!$('contains_dummy').contains('fooo'));
           this.assert($('contains_dummy').contains(/bla.\s/));
+        },
+        testElementMethodsReplaceHTML: function() {
+          $('replace_html_dummy').replaceHTML(/some/, '_some_');
+          this.assertIdentical('_some_ content...', $('replace_html_dummy').innerHTML);
+          $('replace_html_dummy').replaceHTML(/(\S)/g, '$1 ');
+          this.assertIdentical('_ s o m e _  c o n t e n t . . . ', $('replace_html_dummy').innerHTML);
+        },
+        testElementMethodsReplaceAttribute: function() {
+          $('dummy_input').replaceAttribute('name', /_/g, '-');
+          this.assertIdentical('dummy-input', $('dummy_input').readAttribute('name'));
         }
       })
     </script>
