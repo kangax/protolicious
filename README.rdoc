@@ -17,9 +17,9 @@ Protolicious is a set of javascript snippets based on prototype.js
 * <tt>Function#negate</tt>
 * <tt>Function#runOnce</tt>
 * <tt>Function#_new</tt>
-* <tt>Function#toDelayed()</tt>
-* <tt>Function#toDeferred()</tt>
-* <tt>Function#addAdvice()</tt>
+* <tt>Function#toDelayed</tt>
+* <tt>Function#toDeferred</tt>
+* <tt>Function#addAdvice</tt>
 
 == Array extensions
 
