@@ -66,6 +66,24 @@ Object.isEvent = function(object) {
 };
 
 /**
+ * Object.isClass(object) -> Boolean
+ * - object(Any): Object to test
+ *
+ * Returns true if passed object was created via Class.create
+ * (it's somewhat naive in a way that it simply tests for prototype.initialize method on an object) 
+ *
+ *    Object.isClass(Hash); // true
+ *    Object.isClass({}); // false
+ *    Object.isClass(function(){}); // false
+ *
+ **/
+Object.isClass = function(object) {
+  return Object.isFunction(object) &&
+    object.prototype &&
+    Object.isFunction(object.prototype.initialize);
+};
+
+/**
  * Object.methodize(object) -> Object
  *
  * Returns a clone of a passed in object but with all functions methodized
