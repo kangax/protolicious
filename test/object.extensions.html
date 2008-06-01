@@ -78,6 +78,24 @@
           this.assert(!''.isFoo());
           this.assert('blah'.isLengthEven());
           this.assert(!'bla'.isLengthEven());
+        },
+        
+        testObjectIsClass: function() {
+          this.assert(Object.isClass(Hash));
+          this.assert(Object.isClass(ObjectRange));
+          this.assert(Object.isClass(Ajax.Request));
+          
+          this.assert(!Object.isClass(Element));
+          this.assert(!Object.isClass(window));
+          this.assert(!Object.isClass({}));
+          this.assert(!Object.isClass([]));
+          this.assert(!Object.isClass(5));
+          this.assert(!Object.isClass(null));
+          this.assert(!Object.isClass());
+          this.assert(!Object.isClass(false));
+          this.assert(!Object.isClass(0));
+          this.assert(!Object.isClass(document.getElementsByTagName('div')));
+          this.assert(!Object.isClass(function(){}));
         }
       })
     </script>
