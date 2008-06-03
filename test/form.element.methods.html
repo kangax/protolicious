@@ -17,6 +17,11 @@
     <div id="testlog"></div>
     
     <input type="text" name="dummy_input" value="" id="dummy_input" />
+    <select id="dummy_select">
+      <option value="foo" selected="selected">foo</option>
+      <option value="bar">bar</option>
+      <option value="baz">baz</option>
+    </select>
     
     <script type="text/javascript">
       new Test.Unit.Runner({
@@ -25,6 +30,14 @@
           this.assert(input.isBlank());
           input.setValue('foo');
           this.assert(!input.isBlank());
+        },
+        testFieldMethodsSelectOptionByValue: function() {
+          var element = $('dummy_select');
+          
+          element.selectOptionByValue('bar');
+          this.assert(element.selectedIndex == 1);
+          element.selectOptionByValue('baz');
+          this.assert(element.selectedIndex == 2);
         }
       })
     </script>

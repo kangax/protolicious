@@ -28,4 +28,21 @@ Field.Methods.present = function(element) {
     (/select-one|select-multiple/.test(t) && element.selectedIndex != -1));
 };
 
+/**
+ * 
+ *
+ **/
+Field.Methods.selectOptionByValue = function(element, value) {
+  var index = 0;
+  element = $(element);
+  Element.childElements(element).each(function(element, i) {
+    if (element.value == value) {
+      index = i;
+      throw $break;
+    }
+  })
+  element.selectedIndex = index;
+  return element;
+};
+
 Element.addMethods();
