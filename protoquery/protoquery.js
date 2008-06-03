@@ -49,30 +49,35 @@ $Q.addMethods({
   
   var Wrapper = Class.create(Enumerable, {
     initialize: function(selector) {
-      this.elements = Object.isElement(selector) ? [selector] : $$(selector);
+      this.elements = Object.isString(selector) ? $$(selector) : [$(selector)];
     }
   });
   
-  for (var method in Element.Methods) {
-    if (/^Simulated|ByTag|classNames|getElementsByClassName|getElementsBySelector|immediateDescendants$/.test(method)) continue;
-    Wrapper.prototype[method] = (function(method){
-      return function() { 
-        var args = $A(arguments), returnFirst = false, result, _elements = [];
-        this.elements.each(function(element, i) {
-          result = Element.Methods[method].apply(null, args.length ? [element].concat(args) : [element]);
-          if (Object.isUndefined(result) || !Object.isElement(result)) {
-            returnFirst = true;
-            throw $break;
-          }
-          result && (_elements[i] = element);
-        });
-        
-        if (returnFirst) return result;
-        this.elements = _elements;
-        return this;
-      }
-    })(method);
-  };
+  function copyFrom(obj) {
+    for (var method in obj) {
+      if (/^Simulated|ByTag|classNames|getElementsByClassName|getElementsBySelector|immediateDescendants$/.test(method)) continue;
+      Wrapper.prototype[method] = (function(method) {
+        return function() { 
+          var args = $A(arguments), returnFirst = false, result, _elements = [];
+          this.elements.each(function(element, i) {
+            result = obj[method].apply(null, args.length ? [element].concat(args) : [element]);
+            if (Object.isUndefined(result) || !Object.isElement(result)) {
+              returnFirst = true;
+              throw $break;
+            }
+            result && (_elements[i] = element);
+          });
+
+          if (returnFirst) return result;
+          this.elements = _elements;
+          return this;
+        }
+      })(method);
+    };
+  }
+  
+  copyFrom(Element.Methods);
+  copyFrom(Form.Element.Methods);
   
   Wrapper.addMethods({
     inspect: function(){
@@ -119,5 +124,17 @@ $Q.addMethods({
     for (var name in methods) {
       Wrapper.prototype[name] = methods[name];
     }
-  }
+  };
+  
+  Element.addMethods = (function(original) {
+    var f = function() {
+      original.apply(original, arguments);
+      copyFrom(Element.Methods);
+      copyFrom(Form.Element.Methods);
+    };
+    f.toString = original.toString.bind(original);
+    return f;
+  })(Element.addMethods);
+  
+  Element.addMethods();
 })();
