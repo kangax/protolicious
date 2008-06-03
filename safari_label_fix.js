@@ -6,5 +6,5 @@ document.observe('click', function(e) {
   var input = $(target.readAttribute('for'));
   if (!input) return;
   input.focus();
-  input.type && (/radio|checkbox/).test(input.type)) && input.click();
+  input.type && (/radio|checkbox/).test(input.type) && input.click();
 })
