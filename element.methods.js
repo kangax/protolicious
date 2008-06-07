@@ -183,4 +183,41 @@ Element.Methods.wrapContent = function(element, wrapper, attributes) {
   return element;
 };
 
+/**
+ * This snippet fully duplicates what prototype does when initializing Element.extend, 
+ * but applied to a specified iframe document
+ * I think we should expose "copy" function as a public method, for cases like this one
+ * Tested in FF and Safari. Doesn't work in Opera.
+ *
+ **/
+Element.extendIframe = function(element) {
+  element = $(element);
+  var proto = $(element).contentWindow.HTMLElement.prototype;
+  function copy(methods, destination, onlyIfAbsent) {
+    onlyIfAbsent = onlyIfAbsent || false;
+    for (var property in methods) {
+      var value = methods[property];
+      if (!Object.isFunction(value)) continue;
+      if (!onlyIfAbsent || !(property in destination))
+        destination[property] = value.methodize();
+    }
+  }
+  copy(Element.Methods, proto);
+  copy(Element.Methods.Simulated, proto, true);
+  return element;
+}
+/**
+ * Element.indexOf(@element) -> Number|undefined
+ * returns index of element in its parent or undefined if parent does not exist
+ *
+ *    $(document.body).indexOf(); // 1
+ *    $$('ul#nav li a.active')[0].indexOf(); // 12
+ *
+ **/
+Element.Methods.indexOf = function(element) {
+  var parent = $(element.parentNode);
+  if (!parent) return;
+  return parent.childElements().indexOf(element);
+}
+
 Element.addMethods();

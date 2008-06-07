@@ -49,7 +49,8 @@ $Q.addMethods({
   
   var Wrapper = Class.create(Enumerable, {
     initialize: function(selector) {
-      this.elements = Object.isString(selector) ? $$(selector) : [$(selector)];
+      this.elements = Object.isString(selector) ? $$(selector) : [selector ? $(selector) : document];
+      this._toArray();
     }
   });
   
@@ -104,6 +105,9 @@ $Q.addMethods({
     },
     last: function() {
       return this.elements.last();
+    },
+    _toArray: function() {
+      Array.prototype.push.apply(this, this.elements);
     }
   });
   

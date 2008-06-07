@@ -34,7 +34,8 @@ Field.Methods.present = function(element) {
  **/
 Field.Methods.selectOptionByValue = function(element, value) {
   var index = 0;
-  element = $(element);
+  element = $(element); 
+  value = parseInt(value, 10);
   Element.childElements(element).each(function(element, i) {
     if (element.value == value) {
       index = i;
