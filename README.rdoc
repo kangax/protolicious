@@ -10,6 +10,7 @@ Protolicious is a set of javascript snippets based on prototype.js
 * <tt>Element#swapClassName</tt>
 * <tt>Element#enableClassName</tt>
 * <tt>Element#contains</tt>
+* <tt>Element#indexOf</tt>
 
 == Function extensions
 

@@ -205,7 +205,8 @@ Element.extendIframe = function(element) {
   copy(Element.Methods, proto);
   copy(Element.Methods.Simulated, proto, true);
   return element;
-}
+};
+
 /**
  * Element.indexOf(@element) -> Number|undefined
  * returns index of element in its parent or undefined if parent does not exist
@@ -218,6 +219,6 @@ Element.Methods.indexOf = function(element) {
   var parent = $(element.parentNode);
   if (!parent) return;
   return parent.childElements().indexOf(element);
-}
+};
 
 Element.addMethods();
