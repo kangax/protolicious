@@ -221,4 +221,17 @@ Element.Methods.indexOf = function(element) {
   return parent.childElements().indexOf(element);
 };
 
+/**
+ * Element.isTagName(@element, tagName) -> Boolean | null
+ * returns true if element has tagName equal to the one specified
+ * returns null if element has no tagName
+ *
+ *    
+ *
+ **/
+Element.Methods.isTagName = function(element, tagName) {
+  if (!element.tagName) return null;
+  return element.tagName.toUpperCase() == String(tagName).toUpperCase();
+};
+
 Element.addMethods();
