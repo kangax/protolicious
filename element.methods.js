@@ -226,12 +226,42 @@ Element.Methods.indexOf = function(element) {
  * returns true if element has tagName equal to the one specified
  * returns null if element has no tagName
  *
- *    
+ *    $(document.body).isTagName('body'); // true
+ *    $$('h2)[0].isTagName('span'); // false
  *
  **/
 Element.Methods.isTagName = function(element, tagName) {
   if (!element.tagName) return null;
   return element.tagName.toUpperCase() == String(tagName).toUpperCase();
+};
+
+/**
+ * Element.getContentWidth(@element) -> Number
+ * returns element's "inner" width - without padding/border dimensions
+ *
+ *    $(someElement).getContentWidth(); // 125
+ *
+ **/
+Element.Methods.getContentWidth = function(element) {
+  return ['paddingLeft', 'paddingRight', 'borderLeftWidth', 'borderRightWidth']
+    .inject(Element.getWidth(element), function(total, prop) {
+      return total - parseInt(Element.getStyle(element, prop), 10);
+    })
+};
+
+/**
+ * Element.setWidth(@element, width) -> @element
+ * sets element's width to a specified value 
+ * or to a value of its content width (if value was not supplied)
+ *
+ *    $(someElement).setWidth();
+ *    $(someOtherElement).setWidth(100);
+ *
+ **/
+Element.Methods.setWidth = function(element, width) {
+  return Element.setStyle(element, { 
+    width: (Object.isUndefined(width) ? Element.getContentWidth(element) : width) + 'px'
+  })
 };
 
 Element.addMethods();
