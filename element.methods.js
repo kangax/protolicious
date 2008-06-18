@@ -250,6 +250,20 @@ Element.Methods.getContentWidth = function(element) {
 };
 
 /**
+ * Element.getContentHeight(@element) -> Number
+ * returns element's "inner" height - without padding/border dimensions
+ *
+ *    $(someElement).getContentHeight(); // 141
+ *
+ **/
+Element.Methods.getContentHeight = function(element) {
+  return ['paddingTop', 'paddingBottom', 'borderTopWidth', 'borderBottomWidth']
+    .inject(Element.getHeight(element), function(total, prop) {
+      return total - parseInt(Element.getStyle(element, prop), 10);
+    })
+};
+
+/**
  * Element.setWidth(@element, width) -> @element
  * sets element's width to a specified value 
  * or to a value of its content width (if value was not supplied)
@@ -262,6 +276,35 @@ Element.Methods.setWidth = function(element, width) {
   return Element.setStyle(element, { 
     width: (Object.isUndefined(width) ? Element.getContentWidth(element) : width) + 'px'
   })
+};
+
+/**
+ * Element.setHeight(@element, height) -> @element
+ * sets element's height to a specified value 
+ * or to a value of its content height (if value was not supplied)
+ *
+ *    $(someElement).setHeight();
+ *    $(someOtherElement).setHeight(68);
+ *
+ **/
+Element.Methods.setHeight = function(element, height) {
+  return Element.setStyle(element, { 
+    width: (Object.isUndefined(width) ? Element.getContentHeight(element) : height) + 'px'
+  })
+};
+
+/**
+ * Element.appearVisible(@element, effectOptions) -> @element
+ * Assumes that element (the method is applied on) has style of "visibility:hidden"
+ * Makes element appear from its state to a visible, by changing opacity
+ *
+ * requires: effects.js
+ *
+ **/
+Element.Methods.appearVisible = function(element, options) {
+  return Element.setOpacity(element, 0)
+    .setStyle({ visibility: 'visible' })
+    .morph('opacity:1', options);
 };
 
 Element.addMethods();
