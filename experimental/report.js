@@ -19,23 +19,19 @@ function report() {
   var results = 0, c = Event.cache;
   for (var element in c) {
     for (var handler in c[element]) {
-      for (var eventName in c[element]) {
-        if (eventName == 'element') continue;
-        results += c[element][eventName].length;
-      }
+      if (handler == 'element') continue;
+      results += c[element][handler].length;
     }
   }
   // find non-unique ids
-  var ids = $$('*').pluck('id').without('');
+  var withId = $$('[id]'), ids = withId.pluck('id');
   var nonUnique = [];
-  ids.each(function(id) {
-    if (!isUnique(ids, id))
-      (nonUnique.indexOf(id) == -1) && nonUnique.push(id);
+  ids.each(function(id, i) {
+    !isUnique(ids, id) && nonUnique.push(withId[i]);
   })
   
   // find collapsing names/ids (IE)
-  var withName = $$('*[name]');
-  var withId = $$('*[id]');
+  var withName = $$('[name]');
   var collapsing = [];
   withId.each(function(el) {
     var collapsed = withName.find(function(_el){ return (_el.name == el.id) && _el != el })
@@ -44,9 +40,7 @@ function report() {
     }
   });
   
-  // return result
-  return ['Event handlers: ', results, 
-          '\nNon-Unique ID\'s: ', (nonUnique.length ? nonUnique : 'none'), 
-          '\nCollapsing names/ID\'s: ', (collapsing.length ? collapsing : 'none')
-          ].join('');
+  console.log('Event handlers:\n', 
+    results, '\n\nNon-Unique ID\'s:\n', 
+    nonUnique, '\n\nCollapsing names/ID\'s:\n', collapsing);
 }

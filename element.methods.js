@@ -307,4 +307,52 @@ Element.Methods.appearVisible = function(element, options) {
     .morph('opacity:1', options);
 };
 
+/**
+ * Element.delegate(@element, eventName, selector, handler) -> element
+ * Invokes handler when specified element receives an event from one of its siblings (via bubbling)
+ * A cornerstone of "event delegation"
+ *
+ *    document.delegate('click', 'a.foo', function(e) {
+ *      e.stop();
+ *      // original even is passed through
+ *      // handler is called in a context of an element which was first to match the selector
+ *      // ("a.foo" in this case) 
+ *    })
+ *
+ **/
+Element.Methods.delegate = function(element, eventName, selector, handler) {
+  if (Object.isElement(selector)) {
+    return Event.observe(element, eventName, function(e) {
+      if (e.target == selector || e.target.descendantOf(selector))
+        handler.call(selector, e);
+    })
+  }
+  else {
+    return Event.observe(element, eventName, function(e, element) {
+      if (!(element = e.findElement(selector))) return;
+      handler.call(e.target, e);
+    })
+  }
+};
+document.delegate = Element.Methods.delegate.curry(document);
+
+Element.Methods.fillDocument = function(element) {
+  element = $(element);
+  var vpDim = document.viewport.getDimensions();
+  var docDim = $(document.documentElement).getDimensions();
+  element.style.width = Math.max(docDim.width, vpDim.width) + 'px';
+  element.style.height = Math.max(docDim.height, vpDim.height) + 'px';
+  return element;
+};
+
+Element.Methods.centerInViewport = function(element) {
+  element = $(element);
+  var vpDim = document.viewport.getDimensions();
+  var offsets = document.viewport.getScrollOffsets();
+  var elDim = Element.getDimensions(element);
+  element.style.left = (((vpDim.width - elDim.width) / 2) + offsets.left)  + 'px';
+  element.style.top = (((vpDim.height - elDim.height) / 2) + offsets.top) + 'px';
+  return element;
+};
+
 Element.addMethods();

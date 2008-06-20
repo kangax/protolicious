@@ -12,6 +12,14 @@ Protolicious is a set of javascript snippets based on prototype.js
 * <tt>Element#contains</tt>
 * <tt>Element#indexOf</tt>
 * <tt>Element#isTagName</tt>
+* <tt>Element#getContentWidth</tt>
+* <tt>Element#getContentHeight</tt>
+* <tt>Element#setWidth</tt>
+* <tt>Element#setHeight</tt>
+* <tt>Element#appearVisible</tt>
+* <tt>Element#delegate</tt>
+* <tt>Element#fillDocument</tt>
+* <tt>Element#centerInViewport</tt>
 
 == Function extensions
 
