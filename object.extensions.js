@@ -110,3 +110,9 @@ Object.methodize = function(object) {
     return m;
   });
 };
+
+Object.isNodeList = function(object) {
+  return !!object && 
+    typeof object.length != 'undefined' && 
+    typeof object.item != 'undefined'
+}
