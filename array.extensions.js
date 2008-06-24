@@ -36,3 +36,26 @@ Array.prototype.isUnique = function(value){
   var idx = this.indexOf(value);
   return this.indexOf(value, idx + 1) == -1;
 };
+
+/**
+ * Array#sliceNonUnique -> Array
+ *
+ *    var arr = [1,1,2,3,3,4,1,2,2,5,5,5];
+ *    arr.sliceRepeating();
+ *    
+ *    // produces
+ *    [[1, 1, 1], [2, 2, 2], [3, 3], [5, 5, 5]]
+ *
+ **/
+Array.prototype.sliceNonUnique = function() {
+  var result = [], clone = this.sort();
+  for (var i=0, l=clone.length; i<l; i++) {
+    if (clone[i] === clone[i+1]) {
+      var temp = [];
+      while (clone[i] === clone[i+1]) { temp.push(clone[i]); i++; }
+      if (clone[i] === clone[i-1]) { temp.push(clone[i]); }
+      result.push(temp);
+    }
+  }
+  return result;
+};
