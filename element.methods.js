@@ -336,6 +336,12 @@ Element.Methods.delegate = function(element, eventName, selector, handler) {
 };
 document.delegate = Element.Methods.delegate.curry(document);
 
+/**
+ * Element#fillDocument(@element) -> @element
+ * Sets element's dimensions to completely fill document (not viewport) 
+ * a.k.a modal-page-overlay
+ *
+ **/
 Element.Methods.fillDocument = function(element) {
   element = $(element);
   var vpDim = document.viewport.getDimensions();
@@ -345,6 +351,11 @@ Element.Methods.fillDocument = function(element) {
   return element;
 };
 
+/**
+ * Element#centerInViewport(@element) -> @element
+ * Centers element in a vieport. Element should be absolutely positioned.
+ *
+ **/
 Element.Methods.centerInViewport = function(element) {
   element = $(element);
   var vpDim = document.viewport.getDimensions();
@@ -353,6 +364,45 @@ Element.Methods.centerInViewport = function(element) {
   element.style.left = (((vpDim.width - elDim.width) / 2) + offsets.left)  + 'px';
   element.style.top = (((vpDim.height - elDim.height) / 2) + offsets.top) + 'px';
   return element;
+};
+
+/**
+ * Element#vToggle(@element, options) -> @element
+ * - @element(DOMElement): element to toggle
+ * - options(Object): standard effect options (for effect fine tuning)
+ *
+ * Toggles element by morphing its height back and forth. 
+ * Designed to work with set paddings
+ * 
+ * requires: Element#getContentHeight
+ *
+ *
+ **/ 
+Element.Methods.vToggle = function(el, options) {
+  if (Object.isUndefined(el.__temp)) {
+    el.__temp = {
+      paddingTop: parseFloat(Element.getStyle(el, 'paddingTop'), 10),
+      paddingBottom: parseFloat(Element.getStyle(el, 'paddingBottom'), 10),
+      height: Element.getContentHeight(el),
+      dir: Element.visible(el) ? true : false
+    };
+  }
+  var style = [
+    'height:', (el.__temp.dir ? 0 : el.__temp.height), 
+    'px;padding-top:', (el.__temp.dir ? 0 : el.__temp.paddingTop), 
+    'px;padding-bottom:', (el.__temp.dir ? 0 : el.__temp.paddingBottom), 'px'
+  ].join('');
+  if (!Element.visible(el)) {
+    Element.setStyle(el, { height: 0, paddingTop: 0, paddingBottom: 0 }).show();
+  }
+  return Element.morph(el, style, Object.extend(options || { }, {
+    afterFinish: function() { 
+      el.__temp.dir = !el.__temp.dir; 
+      if (el.__temp.dir) {
+        el.setStyle({ height: 'auto' });
+      }
+    }
+  }));
 };
 
 Element.addMethods();
