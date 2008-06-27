@@ -366,42 +366,47 @@ Element.Methods.centerInViewport = function(element) {
   return element;
 };
 
+Element.Methods.vExpand = function(element, options) {
+  element = $(element);
+  if (Element.visible(element)) return element;
+  Element.show(element);
+  var top = parseFloat(Element.getStyle(element, 'paddingTop'), 10);
+  var bottom = parseFloat(Element.getStyle(element, 'paddingBottom'), 10);
+  var height = Element.getContentHeight(element);
+  var style = 'height:'+ height +'px;padding-top:'+ top +'px;padding-bottom:'+ bottom +'px;opacity:1';
+  Element.setStyle(element, { height: 0, paddingTop: 0, paddingBottom: 0 });
+  return Element.morph(element, style, Object.extend(options || { }, {
+    afterFinish: function() {
+      Element.setStyle(element, { height: 'auto' })
+    }
+  }))
+};
+
+Element.Methods.vCollapse = function(element, options) {
+  element = $(element);
+  if (!Element.visible(element)) return element;
+  return Element.morph(element, 'height:0px;padding-top:0px;padding-bottom:0px;opacity:0', Object.extend(options || {}, {
+    afterFinish: function() {
+      Element.hide(element).setStyle({ height: '', paddingTop: '', paddingBottom: '' });
+    }
+  }))
+};
+ 
 /**
  * Element#vToggle(@element, options) -> @element
  * - @element(DOMElement): element to toggle
  * - options(Object): standard effect options (for effect fine tuning)
  *
- * Toggles element by morphing its height back and forth. 
- * Designed to work with set paddings
+ * Toggles element by morphing its height/opacity back and forth. 
+ * Works safely with paddings
  * 
  * requires: Element#getContentHeight
  *
  *
- **/ 
-Element.Methods.vToggle = function(el, options) {
-  if (Object.isUndefined(el.__temp)) {
-    el.__temp = {
-      paddingTop: parseFloat(Element.getStyle(el, 'paddingTop'), 10),
-      paddingBottom: parseFloat(Element.getStyle(el, 'paddingBottom'), 10),
-      height: Element.getContentHeight(el),
-      dir: Element.visible(el) ? true : false
-    };
-  }
-  var style = [
-    'height:', (el.__temp.dir ? 0 : el.__temp.height), 
-    'px;padding-top:', (el.__temp.dir ? 0 : el.__temp.paddingTop), 
-    'px;padding-bottom:', (el.__temp.dir ? 0 : el.__temp.paddingBottom), 'px'
-  ].join('');
-  if (!Element.visible(el)) {
-    Element.setStyle(el, { height: 0, paddingTop: 0, paddingBottom: 0 }).show();
-  }
-  return Element.morph(el, style, Object.extend(options || { }, {
-    afterFinish: function() { 
-      el.__temp.dir = !el.__temp.dir; 
-      if (el.__temp.dir) {
-        el.setStyle({ height: 'auto' });
-      }
-    }
+ **/
+Element.Methods.vToggle = function(element, options) {
+  return Element[Element.visible(element) ? 'vCollapse' : 'vExpand'](element, Object.extend(options || { }, {
+    queue: { limit: 1, position: 'end', scope: element.identify() }
   }));
 };
 
