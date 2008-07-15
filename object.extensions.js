@@ -115,4 +115,8 @@ Object.isNodeList = function(object) {
   return !!object && 
     typeof object.length != 'undefined' && 
     typeof object.item != 'undefined'
-}
+};
+
+Object.isPrimitive = function(o) {
+  return (o == null || /number|string|boolean/.test(typeof o));
+};
