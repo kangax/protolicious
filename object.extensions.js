@@ -120,3 +120,38 @@ Object.isNodeList = function(object) {
 Object.isPrimitive = function(o) {
   return (o == null || /number|string|boolean/.test(typeof o));
 };
+
+Object.hasMagicLength = function(o) {
+  if (o && typeof o == 'object' && typeof o.length == 'number' && isFinite(o.length)) {
+    var _origLength = o.length;
+    o[o.length] = '__test__';
+    var _newLength = o.length;
+    o.length = _origLength;
+    return _newLength == _origLength + 1;
+  }
+  return false;
+}
+
+/**
+ * Object.create(parent, properties) -> Object
+ *
+ * resembling the one from ES3.1
+ *
+ */
+Object.create = (function(){
+  function F(){};
+  function isObject(o) {
+    return !!o && !/undefined|boolean|string|number/.test(typeof o);
+  }
+  return function(parent, properties) {
+    if (!isObject(parent) || !isObject(properties)) {
+      throw TypeError('Object expected');
+    }
+    F.prototype = parent;
+    var object = new F;
+    for (var prop in properties) {
+      object[prop] = properties[prop];
+    }
+    return object;
+  }
+})();
