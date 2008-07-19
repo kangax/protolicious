@@ -1,14 +1,14 @@
 /**
- *  Element#contains(@element, pattern) -> Boolean
+ *  Element#containsText(@element, pattern) -> Boolean
  *  - @element(Element): element which content will be tested
  *  - pattern(String|RegExp): pattern to test element's content against
  *  
  *  Tests whether element's content contains specified string (or matches agains regular expression)
  *  
- *      $("myElement").contains("some text...");
- *      $("otherElement").contains(/(foo|bar)/i)
+ *      $("myElement").containsText("some text...");
+ *      $("otherElement").containsText(/(foo|bar)/i)
  **/ 
-Element.Methods.contains = function(element, pattern) { 
+Element.Methods.containsText = function(element, pattern) { 
   element = $(element);
   if (!pattern) return false;
   pattern = pattern.constructor == RegExp ? pattern : RegExp.escape(pattern);
