@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Capability detection (rewritten)</title>
+  </head>
+  <body>
+    
+    <p style="margin-bottom:2em;padding-bottom:0.33em;border-bottom:1px dotted #aaa">
+      Rewritten version of a script presented in 
+      <a href="http://dev.opera.com/articles/view/using-capability-detection/" title="Article on Dev.Opera">
+        Using capability detection
+      </a>
+      article
+    </p>
+    
+    <script type="text/javascript">
+  	  
+  	  // If the browser does not support the navigator object we will make one
+    	if (!window.navigator) {
+    	  window.navigator = new Object();
+    	}
+
+    	// Capability: DOM generation "0", e.g. accessing images, links and form elements
+    	// If you really need this you are encouraged to enhance these tests..
+    	navigator.capDOM0 = !!(
+    	  document.images && 
+    	  document.links);
+
+    	// Capability: DOM generation "0.5", the browser-proprietary APIs of Netscape 4 and IE 4. Deprecated!
+    	navigator.capOldDOMIE = !!(
+    	  document.all && 
+    	  document.all.item && 
+    	  document.all.urns && 
+    	  document.all.namedItem && 
+    	  document.all.tags && 
+    	  document.all.tags('body'));
+
+    	// I don't know enough about document.layers DOM to truly test for it.
+    	navigator.capOldDOMNN = !!(document.layers);
+
+    	// Capability: DOM generation "2", e.g. accessing any element on the page, creating elements, changing contents
+    	// You are encouraged to add in-depth tests for other parts of the DOM2 specification that your scripts depend on
+    	navigator.capDOM2 = !!(
+    	  document.createElement && 
+    	  document.createElement('p') && 
+    	  (document.createElement('p')).appendChild);
+
+    	// Capability: DOM generation "2" document traversal
+    	/* navigator.capDOM2Traversal = !!(
+    	  document.createNodeIterator && 
+    	  document.createNodeIterator(document.body, 1, null, false) && 
+    	  document.createNodeIterator(document.body, 1, null, false).nextNode);
+    	*/
+
+    	// Capability: DOM generation "3" approach to loading / serializing data
+    	navigator.capDOM3LS = !!(
+    	  document.implementation && 
+    	  document.implementation.createLSParser && 
+    	  document.implementation.createLSParser(1, null) && 
+    	  document.implementation.createLSParser(1, null).parse);
+
+    	// Capability: HTML element prototypes
+    	navigator.capElementPrototypes = !!(typeof HTMLElement != 'undefined' && HTMLElement.prototype);
+
+    	// Capability: text selection manipulation in forms
+    	navigator.capTextSelection = false;
+    	if (navigator.capDOM2) {
+    		temp = document.createElement('textarea');
+    		navigator.capTextSelection = !!(temp.setSelectionRange || temp.createTextRange);
+    	}
+
+    	// Capability: wysiwyg editing 
+    	navigator.capWYSIWYGedit = !!(document.execCommand || document.designMode);
+
+    	// Capability: VBScript
+    	navigator.capVBScript = false;
+    	document.open();
+    	document.write('<scr' + 'ipt type="text/vbscript">navigator.capVBScript = True</scr' + 'ipt>');
+    	document.close();
+    	// Note: in an XHTML document you need to use DOM methods rather than document.write
+
+    	// Capability: plugin detection through navigator.plugins
+    	navigator.capNPPluginDetect = !!(navigator.plugins && navigator.plugins.length);
+
+    	// Capability: define getters and setters 
+    	navigator.capDefineGetSet = !!(window.__defineGetter__);
+
+    	// Capability: CSS behaviors
+    	var tmpdiv = document.createElement('div');
+    	tmpdiv.innerHTML = '<a style="behavior:url(#default#homepage)"></a>';
+    	navigator.supportsBehaviors = (typeof tmpdiv.firstChild.style.behavior != 'undefined');
+
+    	// Capability: use try...catch. 
+    	// This must be last because browsers that do not support try...catch may terminate script here
+    	navigator.capTryCatch = false;
+    	eval('try{ navigator.capTryCatch = true; }catch(e){}');
+  	  
+  	</script>
+
+  	<script type="text/javascript">
+  	
+  	  // Capability: request data from server
+    	// Note: Depends on try...catch support, so we do this test in a separate SCRIPT tag or file
+    	navigator.capDataRequests = !!(
+    	  (window.XMLHttpRequest && 
+    	    new XMLHttpRequest() && 
+    	    new XMLHttpRequest().open) ||
+    	  (window.ActiveXObject && 
+          (function ( progIDs ){
+    		    var test = function( progIDs ) {
+    			    try {
+    				    return new ActiveXObject(progIDs.pop());
+    			    } catch(e) {
+    				    return (progIDs.length) ? test(progIDs) : false;
+    			    }
+    		    }
+    		    return test(progIDs);
+    	      })(['Microsoft.XMLHTTP', 'MSXML2.XMLHTTP'])
+    	));
+  	  
+  	</script>
+
+  	<script type="text/javascript">
+  		// Show all built-in and custom navigator properties..
+  		for (var prop in navigator) {
+  		  document.write('navigator.<b>' + prop + '</b>: ' + navigator[ prop ] + '<br>');
+  		}
+  	</script>
+  </body>
+</html>
