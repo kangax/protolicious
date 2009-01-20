@@ -15,7 +15,9 @@
 // with corrections by John David Dalton and juanbond
 (function(){
   function getElement(object){
-    return (object._eventElement = object._eventElement || new Element('code'));
+    return (object._eventElement = object._eventElement || 
+        (document.body || document.documentElement)
+          .appendChild(new Element('div')));
   }
   Class.Observable = {
     observe: function(eventName, handler) {
