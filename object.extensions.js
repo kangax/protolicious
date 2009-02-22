@@ -118,7 +118,7 @@ Object.isNodeList = function(object) {
 };
 
 Object.isPrimitive = function(o) {
-  return (o == null || /number|string|boolean/.test(typeof o));
+  return (o == null || /^(number|string|boolean)$/.test(typeof o));
 };
 
 Object.hasMagicLength = function(o) {
@@ -141,7 +141,7 @@ Object.hasMagicLength = function(o) {
 Object.create = (function(){
   function F(){};
   function isObject(o) {
-    return !!o && !/undefined|boolean|string|number/.test(typeof o);
+    return (o != null && !/^(boolean|string|number)$/.test(typeof o));
   }
   return function(parent, properties) {
     if (!isObject(parent) || !isObject(properties)) {
