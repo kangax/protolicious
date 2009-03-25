@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Clearer widget</title>
+    <style type="text/css" media="screen">
+      .clearer { 
+        background: #bababa; 
+        color: #fff; 
+        display: inline-block; 
+        margin: 0; 
+        padding: 3px 4px; 
+        line-height: 9px; 
+        vertical-align: middle; 
+        font-family: monospace;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        cursor: default;
+        position: absolute;
+        top: 0;
+        right: 3px;
+      }
+      form { background: #aaa; padding: 0.5em; }
+      #testee { -moz-border-radius: 10px; border: 1px solid #aaa; padding: 2px 2px 2px 6px; height: 40px; }
+      #testee:focus { border-color: #aaf; }
+    </style>
+    <script src="wrapPreserve.js" type="text/javascript"></script>
+    <script src="clearer.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <form action="/">
+      <label for="testee">Search:</label>
+      <input type="text" id="testee">
+    </form>
+    
+    <script type="text/javascript">
+      new Clearer(document.getElementById('testee'));
+    </script>
+  </body>
+</html>
