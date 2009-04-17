@@ -27,7 +27,7 @@
   }
   
   Event.simulate = function(element, eventName) {
-    var options = Object.extend(defaultOptions, arguments[2] || { });
+    var options = Object.extend(Object.clone(defaultOptions), arguments[2] || { });
     var oEvent, eventType = null;
     
     element = $(element);
