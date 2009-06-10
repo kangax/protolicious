@@ -1,6 +1,6 @@
 = Description
 
-Protolicious is a set of javascript snippets based on prototype.js
+Protolicious is a set of javascript snippets based on prototype.js (and other random stuff)
 
 = Contents
 
