@@ -1,10 +1,6 @@
 /*
 
-Modified version of Cookie module from Livepipe.net by Ryan Johnson
-(mostly "fix" few variables being declared globally + minor rearrangements)
-
-Original version:
-http://livepipe.net/downloads/prototype.tidbits.1.7.0.js
+Modified version of Cookie module
 
 */
 
@@ -19,15 +15,9 @@ var Cookie = {
 		document.cookie = name + "=" + value + expiry + "; path=/";
 	},
 	get: function(name) {
-		var nameEQ = name + "=", ca = document.cookie.split(';');
-		for (var i=0, c; i < ca.length; i++) {
-			c = ca[i];
-			while (c.charAt(0) == ' ')
-				c = c.substring(1, c.length);
-			if (c.indexOf(nameEQ) == 0)
-				return c.substring(nameEQ.length, c.length);
-		}
-		return null;
+		var cookies = document.cookie.split(/;\s*/);
+		var nameEQ = name + "=", c = cookies.find(function(s){return s.startsWith(nameEQ);});
+		return c? c.substr(nameEQ.length) : null;
 	},
 	unset: function(name) {
 		Cookie.set(name, '', -1);
