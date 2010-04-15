@@ -1,0 +1,60 @@
+/* Sass 3.x compatible */
+
+=min-height($height)
+  min-height  : $height
+  height      : auto !important
+  height      : $height
+
+=min-width($width)
+  min-width   : $width
+  width       : auto !important
+  width       : $width
+
+=opacity($value)
+  -ms-filter      : "alpha(opacity=#{$value * 100})"
+  filter          : "alpha(opacity=#{$value * 100})"
+  -moz-opacity    : $value
+  -khtml-opacity  : $value
+  opacity         : $value
+
+=box-shadow($color, $offsetx, $offsety, $radius)
+  -moz-box-shadow     : $color $offsetx $offsety $radius
+  -webkit-box-shadow  : $color $offsetx $offsety $radius
+  -khtml-box-shadow   : $color $offsetx $offsety $radius
+  box-shadow          : $color $offsetx $offsety $radius
+  
+=border-radius($radius)
+  -moz-border-radius      : $radius
+  -webkit-border-radius   : $radius
+  -khtml-border-radius    : $radius
+  border-radius           : $radius
+  
+=border-top-left-radius($value)
+  -moz-border-radius-topleft          : $value
+  -webkit-border-top-left-radius      : $value
+  -khtml-border-top-left-radius       : $value
+  border-top-left-radius              : $value
+
+=border-top-right-radius($value)
+  -moz-border-radius-topright         : $value
+  -webkit-border-top-right-radius     : $value
+  -khtml-border-top-right-radius      : $value
+  border-top-right-radius             : $value
+  
+=border-bottom-right-radius($value)
+  -moz-border-radius-bottomright      : $value
+  -webkit-border-bottom-right-radius  : $value
+  -khtml-border-bottom-right-radius   : $value
+  border-bottom-right-radius          : $value
+  
+=border-bottom-left-radius($value)
+  -moz-border-radius-bottomleft       : $value
+  -webkit-border-bottom-left-radius   : $value
+  -khtml-border-bottom-left-radius    : $value
+  border-bottom-left-radius           : $value
+
+=user-select($value)
+  -moz-user-select    : $value
+  -webkit-user-select : $value
+  -khtml-user-select  : $value
+  user-select         : $value
