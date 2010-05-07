@@ -31,7 +31,7 @@ Element.Methods.toTemplate = function(element) {
  */ 
 Element.Methods.replaceAttribute = function(element, attr, pattern, replacement) {
   return Element.writeAttribute(element, attr, element.readAttribute(attr)
-    .replace(new RegExp(pattern), replacement))
+    .replace(new RegExp(pattern), replacement));
 };
 
 /**
@@ -67,7 +67,7 @@ Element.Methods.toHTML = function(element) {
 Element.Methods._observe = Element.observe.wrap(function(proceed, element, eventName, handler) {
   return proceed.call(proceed, element, eventName, function(e) {
     Event.stop(e); handler.call(e.target, e);
-  })
+  });
 });
 
 /**
@@ -246,7 +246,7 @@ Element.Methods.getContentWidth = function(element) {
   return ['paddingLeft', 'paddingRight', 'borderLeftWidth', 'borderRightWidth']
     .inject(Element.getWidth(element), function(total, prop) {
       return total - parseInt(Element.getStyle(element, prop), 10);
-    })
+    });
 };
 
 /**
@@ -260,7 +260,7 @@ Element.Methods.getContentHeight = function(element) {
   return ['paddingTop', 'paddingBottom', 'borderTopWidth', 'borderBottomWidth']
     .inject(Element.getHeight(element), function(total, prop) {
       return total - parseInt(Element.getStyle(element, prop), 10);
-    })
+    });
 };
 
 /**
@@ -275,7 +275,7 @@ Element.Methods.getContentHeight = function(element) {
 Element.Methods.setWidth = function(element, width) {
   return Element.setStyle(element, { 
     width: (Object.isUndefined(width) ? Element.getContentWidth(element) : width) + 'px'
-  })
+  });
 };
 
 /**
@@ -289,8 +289,8 @@ Element.Methods.setWidth = function(element, width) {
  **/
 Element.Methods.setHeight = function(element, height) {
   return Element.setStyle(element, { 
-    width: (Object.isUndefined(width) ? Element.getContentHeight(element) : height) + 'px'
-  })
+    height: (Object.isUndefined(height) ? Element.getContentHeight(element) : height) + 'px'
+  });
 };
 
 /**
@@ -325,13 +325,13 @@ Element.Methods.delegate = function(element, eventName, selector, handler) {
     return Event.observe(element, eventName, function(e) {
       if (e.target == selector || e.target.descendantOf(selector))
         handler.call(selector, e);
-    })
+    });
   }
   else {
     return Event.observe(element, eventName, function(e, element) {
       if (!(element = e.findElement(selector))) return;
       handler.call(e.target, e);
-    })
+    });
   }
 };
 document.delegate = Element.Methods.delegate.curry(document);
@@ -379,7 +379,7 @@ Element.Methods.vExpand = function(element, options) {
     afterFinish: function() {
       Element.setStyle(element, { height: 'auto' })
     }
-  }))
+  }));
 };
 
 Element.Methods.vCollapse = function(element, options) {
@@ -389,7 +389,7 @@ Element.Methods.vCollapse = function(element, options) {
     afterFinish: function() {
       Element.hide(element).setStyle({ height: '', paddingTop: '', paddingBottom: '' });
     }
-  }))
+  }));
 };
  
 /**
