@@ -410,4 +410,19 @@ Element.Methods.vToggle = function(element, options) {
   }));
 };
 
+/**
+*Element#centerInParent(@element) -> @element
+*Centers element in parent element. Element should be absoltely positioned
+*Parent should have defined dimentions and should be relatively positioned
+*
+**/
+Element.Methods.centerInParent = function(element){
+	element=$(element);
+	var parEleDim = Element.getDimensions(element.up(0));
+	var elDim = Element.getDimensions(element);
+	element.style.left = (parEleDim.width - elDim.width)/2 + 'px';
+	element.style.top = (parEleDim.height - elDim.height)/2 + 'px';
+	return element;
+}
+
 Element.addMethods();
