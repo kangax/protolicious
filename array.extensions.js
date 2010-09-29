@@ -1,7 +1,7 @@
 /**
  * Array#sum() -> Array
  *
- * Returns max value in an array
+ * Returns the numeric sum value of array elements
  *
  * [1,2,3].sum(); 6
  * ['5','','8', 10].sum(); 23 <= type-safe
@@ -41,7 +41,7 @@ Array.prototype.isUnique = function(value){
  * Array#sliceNonUnique -> Array
  *
  *    var arr = [1,1,2,3,3,4,1,2,2,5,5,5];
- *    arr.sliceRepeating();
+ *    arr.sliceNonUnique();
  *    
  *    // produces
  *    [[1, 1, 1], [2, 2, 2], [3, 3], [5, 5, 5]]
