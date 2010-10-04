@@ -34,7 +34,9 @@ Protolicious is a set of javascript snippets based on prototype.js (and other ra
 == Array extensions
 
 * <tt>Array#sum</tt>
-* <tt>Array#namespace</tt>
+* <tt>Array#clone</tt>
+* <tt>Array#isUnique</tt>
+* <tt>Array#sliceNonUnique</tt>
 
 == Field (Form.Element.Methods) extensions
 
