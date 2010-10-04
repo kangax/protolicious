@@ -1,7 +1,7 @@
 /*
 
 Modified version of Cookie module
-
+by Victor Homyakov ( http://github.com/victor-homyakov )
 */
 
 var Cookie = {
