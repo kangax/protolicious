@@ -4,7 +4,7 @@
 
 (function() {
 	var loc = document.location, current = loc.hash;
-	this.setInterval(function() {
+	setInterval(function() {
 		if (loc.hash != current) {
 			document.fire('hash:changed', { oldValue: current, newValue: loc.hash })
 			current = loc.hash;
