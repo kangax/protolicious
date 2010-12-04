@@ -420,8 +420,10 @@ Element.Methods.centerInParent = function(element){
 	element=$(element);
 	var parEleDim = Element.getDimensions(element.up(0));
 	var elDim = Element.getDimensions(element);
-	element.style.left = (parEleDim.width - elDim.width)/2 + 'px';
-	element.style.top = (parEleDim.height - elDim.height)/2 + 'px';
+	element.setStyle({
+		left: (parEleDim.width - elDim.width)/2 + 'px', 
+		top: (parEleDim.height - elDim.height)/2 + 'px'
+	});
 	return element;
 }
 
