@@ -61,4 +61,4 @@
   }
   
   Element.addMethods({ simulate: Event.simulate });
-})()
+})();
