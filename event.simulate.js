@@ -12,7 +12,7 @@
   
   var eventMatchers = {
     'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
-    'MouseEvents': /^(?:click|mouse(?:down|up|over|move|out))$/
+    'MouseEvents': /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
   }
   var defaultOptions = {
     pointerX: 0,
